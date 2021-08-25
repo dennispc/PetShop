@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DPcode.PetShop.Infrastructure.UI
+namespace PetShop.DPcode.UI
 {
     class Program
     {
