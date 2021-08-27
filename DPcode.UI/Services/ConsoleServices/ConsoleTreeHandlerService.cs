@@ -6,15 +6,19 @@ using DPcode.UI.IService;
 
 namespace DPcode.Infrastructure.UI.Services
 {
-    public class ConsoleTreeHandler : IConsoleTreeHandler
+    public class ConsoleTreeHandlerService : IConsoleTreeHandlerService
     {
         private IMenu _menu;
-        private IConsoleAsker _consoleAsker;
 
-        public ConsoleTreeHandler(IMenu _menu, IConsoleAsker consoleAsker)
+        private IConsoleAskerService _consoleAskerService;
+
+        private string _endSessionString;
+
+        public ConsoleTreeHandlerService(IMenu menu, IConsoleAskerService consoleAskerService, string endSessionString)
         {
-            this._menu = _menu;
-            this._consoleAsker = consoleAsker;
+            this._menu = menu;
+            this._consoleAskerService = consoleAskerService;
+            this._endSessionString = endSessionString;
         }
         public IMenu GetCurrentBranch()
         {
@@ -23,13 +27,14 @@ namespace DPcode.Infrastructure.UI.Services
 
         public string GetResponse()
         {
-            int number = _consoleAsker.GetIntFromTerminal("");
+            int number = _consoleAskerService.GetIntFromTerminal("");
             if (number <= 0)
-                return "stop";
+                return _endSessionString;
             if (number <= _menu.GetBraches().Count)
                 return _menu.GetBraches()[number - 1].GetDescriptor();
-            else
-                throw new ArgumentOutOfRangeException();
+            else{
+                return "";
+                }
         }
 
         public void PrintMenu()
@@ -40,8 +45,9 @@ namespace DPcode.Infrastructure.UI.Services
             {
                 Console.WriteLine($"{(i + 1)} : {menus[i].GetDescriptor()}");
             }
-            Console.WriteLine("<=0 : End session.");
+            Console.WriteLine($"0 : {_endSessionString}");
         }
+        
         public void PrintMenu(IMenu menu)
         {
             List<IMenu> menus = menu.GetBraches();

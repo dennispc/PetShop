@@ -4,8 +4,11 @@ namespace DPcode.Core.IModel
 {
     public interface IMenu
     {
+
         IMenu GetSuper();
+
         bool SetSuper(IMenu menu);
+
         List<IMenu> GetBraches();
 
         bool AddBranch(IMenu menu);
@@ -15,5 +18,6 @@ namespace DPcode.Core.IModel
         string GetDescriptor();
 
         string SetDescriptor(string descriptor);
+        
     }
 }

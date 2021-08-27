@@ -1,8 +1,21 @@
 namespace DPcode.Core.Models
 {
-    public enum PetType
+    public class PetType : IIdentifyable
     {
-     someType,
-     someOtherType   
+        private int _id;
+        public PetType(string type){
+            this.type = type;
+        }
+        public string type{get;set;}
+        public int? GetId()
+        {
+            return _id;
+        }
+
+        public void SetId(int id)
+        {
+            this._id=id;
+        }
+        
     }
 }

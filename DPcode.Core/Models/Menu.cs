@@ -1,16 +1,23 @@
 using System.Collections.Generic;
 using DPcode.Core.IModel;
 
-namespace DPcode.Core.Model
+namespace DPcode.Core.Models
 {
     public class Menu : IMenu
     {
-        public Menu(string _descriptor){
-            this._descriptor=_descriptor;
-        }
         private List<IMenu> branches = new List<IMenu>();
+
         private IMenu super; 
+
         private string _descriptor;
+
+        public Menu(string _descriptor, params IMenu[] menus){
+            this._descriptor=_descriptor;
+            foreach(IMenu menu in menus){
+                branches.Add(menu);
+            }
+        }
+
         public bool AddBranch(IMenu menu)
         {
             branches.Add(menu);
@@ -49,5 +56,6 @@ namespace DPcode.Core.Model
             this.super=menu;
             return super==menu;
         }
+        
     }
 }

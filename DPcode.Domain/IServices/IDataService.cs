@@ -1,19 +1,17 @@
 using System.Collections.Generic;
 using DPcode.Core.Models;
 
-namespace DPcode.Infrastructure.Data.IRepositories
+namespace DPcode.Domain.IServices
 {
-    public interface IFakeDB
+    public interface IDataService
     {
-
         Pet AddPet(Pet pet);
 
         bool DeletePet(Pet pet);
 
 #nullable enable
-        Pet? UpdatePet(Pet pet);
+        Pet? UpdatePet(Pet updatedPet);
 
         List<Pet> GetAllPets();
-        
     }
 }
