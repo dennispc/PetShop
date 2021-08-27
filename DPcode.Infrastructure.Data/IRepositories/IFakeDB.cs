@@ -13,7 +13,7 @@ namespace DPcode.Infrastructure.Data.IRepositories
 #nullable enable
         Pet? UpdatePet(Pet pet);
 
-        List<Pet> GetAllPets();
+        IEnumerable<Pet> GetAllPets();
         
     }
 }

@@ -125,7 +125,7 @@ namespace DPcode.Infrastructure.UI.Services
             if (id != null)
             {
                 Pet p = pets.Find(p => p.GetId() == id);
-                if (GetConfirmation($"Confirm updating pet ({p.ToString()})"))
+                if (p!=null && GetConfirmation($"Confirm updating pet ({p.ToString()})"))
                 {
                     IConsoleTreeHandlerService consoleTreeHandler = new ConsoleTreeHandlerService(Constants.updateMenu, this, Constants.stopUpdate);
                     string response = "";
@@ -173,6 +173,8 @@ namespace DPcode.Infrastructure.UI.Services
                     else
                         Console.WriteLine(Constants.updateStopped);
                 }
+                else
+                Console.WriteLine(Constants.invalidAction);
             }
         }
     }

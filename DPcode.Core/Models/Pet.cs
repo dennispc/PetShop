@@ -39,7 +39,7 @@ namespace DPcode.Core.Models
         public override string ToString()
         {
             string concat = "";
-            string[] attributes = new string[] { _id.ToString(), name, age.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString(), price.ToString() };
+            string[] attributes = new string[] { _id.ToString(), name, age.ToString(), price.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString() };
             for (int i = 0; i < attributes.Length; i++)
             {
                 concat += attributes[i] + (attributes.Length - 1 == i ? "" : " ; ");

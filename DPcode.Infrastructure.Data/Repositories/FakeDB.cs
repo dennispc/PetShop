@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Infrastructure.Data.IRepositories;
 
@@ -7,22 +8,11 @@ namespace DPcode.Infrastructure.Data.Repositories
     public class FakeDB : IFakeDB
     {
 
-        public FakeDB()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Pet p = new Pet();
-                p.name = "petname" + i;
-                p.price = (1332 + i);
-                AddPet(p);
-            }
-        }
 
         private List<Pet> pets = new List<Pet>();
 
         public Pet AddPet(Pet pet)
         {
-            pet.SetId(Utils.GetMaxId(new List<IIdentifyable> (GetAllPets()))+1);
             pets.Add(pet);
             return pet;
         }
@@ -32,7 +22,7 @@ namespace DPcode.Infrastructure.Data.Repositories
             return pets.Remove(pet);
         }
 
-        public List<Pet> GetAllPets()
+        public IEnumerable<Pet> GetAllPets()
         {
             return pets;
         }
@@ -40,19 +30,22 @@ namespace DPcode.Infrastructure.Data.Repositories
 #nullable enable
         public Pet? UpdatePet(Pet pet)
         {
-            #nullable enable
-            Pet? validPet = pets.Find(p=>p.GetId()==pet.GetId());
-            if(pet!=null){
-                #nullable disable
-                validPet.name = pet.name;
-                validPet.type=pet.type;
-                validPet.soldDate=pet.soldDate;
-                validPet.price=pet.price;
-                validPet.birthDate=pet.birthDate;
-                return validPet;
+            if (pet != null)
+            {
+#nullable enable
+                Pet? validPet = pets.First(p => p.GetId() == pet.GetId());
+                if (validPet != null)
+                {
+#nullable disable
+                    validPet.name = pet.name;
+                    validPet.type = pet.type;
+                    validPet.soldDate = pet.soldDate;
+                    validPet.price = pet.price;
+                    validPet.birthDate = pet.birthDate;
+                    return validPet;
+                }
             }
-            else
-                return null;
+            return null;
         }
 
     }

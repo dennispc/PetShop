@@ -31,7 +31,7 @@ namespace DPcode.Infrastructure.UI.Services
                 case Constants.updatePetCommand: UpdatePet(); break;
                 case Constants.deletePetCommand: DeletePet(); break;
                 case Constants.endSessionString: Program.FlipStopBool(); break;
-                default: throw new System.NotImplementedException();
+                default: Console.WriteLine(Constants.invalidAction); break;
             }
 
             Program.Init();
