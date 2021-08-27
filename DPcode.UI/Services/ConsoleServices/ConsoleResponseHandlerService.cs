@@ -13,7 +13,7 @@ namespace DPcode.Infrastructure.UI.Services
 
         private IDataService _dataService;
 
-        public IPetTypeService _petTypeService;
+        private IPetTypeService _petTypeService;
 
         public ConsoleResponseHandlerService(IConsoleAskerService consoleAskerService, IDataService dataService, IPetTypeService petTypeService)
         {
@@ -33,7 +33,6 @@ namespace DPcode.Infrastructure.UI.Services
                 case Constants.endSessionString: Program.FlipStopBool(); break;
                 default: Console.WriteLine(Constants.invalidAction); break;
             }
-
             Program.Init();
         }
 
@@ -45,8 +44,7 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void ListPets()
         {
-            List<Pet> pets = _dataService.GetAllPets();
-            foreach (Pet pet in pets)
+            foreach (Pet pet in _dataService.GetAllPets())
             {
                 Console.WriteLine(pet.ToString());
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DPcode.Core.IModel;
 using DPcode.Infrastructure.UI.IService;
 using DPcode.UI.IService;
+using DPcode.UI;
 
 namespace DPcode.Infrastructure.UI.Services
 {
@@ -12,13 +13,19 @@ namespace DPcode.Infrastructure.UI.Services
 
         private IConsoleAskerService _consoleAskerService;
 
-        private string _endSessionString;
+        private string _endSessionString = Constants.endSessionString;
+
+        public ConsoleTreeHandlerService(IMenu menu, IConsoleAskerService consoleAskerService)
+        {
+            this._menu = menu;
+            this._consoleAskerService = consoleAskerService;
+        }
 
         public ConsoleTreeHandlerService(IMenu menu, IConsoleAskerService consoleAskerService, string endSessionString)
         {
             this._menu = menu;
             this._consoleAskerService = consoleAskerService;
-            this._endSessionString = endSessionString;
+            this._endSessionString=endSessionString;
         }
         public IMenu GetCurrentBranch()
         {

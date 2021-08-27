@@ -14,12 +14,13 @@ namespace DPcode.Infrastructure.UI.Services
         private IPetTypeService _petTypeService;
         private IDataService _dataService;
 
-        public ConsoleAskerService(IPetTypeService petTypeService, IDataService dataService){
-            this._petTypeService=petTypeService;
-            this._dataService=dataService;
+        public ConsoleAskerService(IPetTypeService petTypeService, IDataService dataService)
+        {
+            this._petTypeService = petTypeService;
+            this._dataService = dataService;
         }
 
-#region terminalqueries
+        #region terminalqueries
         public int GetIntFromTerminal(string str)
         {
             Console.Write(str);
@@ -34,7 +35,7 @@ namespace DPcode.Infrastructure.UI.Services
             }
             return validInteger;
         }
-        
+
         public double GetDoubleFromTerminal(string str)
         {
             Console.Write(str);
@@ -94,7 +95,7 @@ namespace DPcode.Infrastructure.UI.Services
         }
         #endregion
 
-#region CRUDqueries
+        #region CRUDqueries
         public Pet CreateNewPet()
         {
             Pet pet = new Pet();
@@ -113,8 +114,12 @@ namespace DPcode.Infrastructure.UI.Services
             if (id != null)
             {
                 Pet p = pets.Find(p => p.GetId() == id);
-                if (GetConfirmation($"Confirm deleting pet ({p.ToString()})"))
+                if (p != null && GetConfirmation($"Confirm deleting pet ({p.ToString()})"))
                     _dataService.DeletePet(p);
+                else
+                {
+                    Console.WriteLine(Constants.petNotFound);
+                }
             }
         }
 
@@ -125,7 +130,7 @@ namespace DPcode.Infrastructure.UI.Services
             if (id != null)
             {
                 Pet p = pets.Find(p => p.GetId() == id);
-                if (p!=null && GetConfirmation($"Confirm updating pet ({p.ToString()})"))
+                if (p != null && GetConfirmation($"Confirm updating pet ({p.ToString()})"))
                 {
                     IConsoleTreeHandlerService consoleTreeHandler = new ConsoleTreeHandlerService(Constants.updateMenu, this, Constants.stopUpdate);
                     string response = "";
@@ -174,10 +179,10 @@ namespace DPcode.Infrastructure.UI.Services
                         Console.WriteLine(Constants.updateStopped);
                 }
                 else
-                Console.WriteLine(Constants.invalidAction);
+                    Console.WriteLine(Constants.petNotFound);
             }
         }
     }
-    
+
     #endregion
 }

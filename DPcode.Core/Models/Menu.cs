@@ -7,13 +7,24 @@ namespace DPcode.Core.Models
     {
         private List<IMenu> branches = new List<IMenu>();
 
-        private IMenu super; 
+        private IMenu super;
 
         private string _descriptor;
 
-        public Menu(string _descriptor, params IMenu[] menus){
-            this._descriptor=_descriptor;
-            foreach(IMenu menu in menus){
+        public Menu()
+        {
+            branches = new List<IMenu>{
+            new Menu(Constants.addPetCommand),
+            new Menu(Constants.listPetsCommand),
+            new Menu(Constants.updatePetCommand),
+            new Menu(Constants.deletePetCommand)};
+        }
+        
+        public Menu(string _descriptor, params IMenu[] menus)
+        {
+            this._descriptor = _descriptor;
+            foreach (IMenu menu in menus)
+            {
                 branches.Add(menu);
             }
         }
@@ -41,21 +52,21 @@ namespace DPcode.Core.Models
 
         public bool SetBranches(List<IMenu> branchMenus)
         {
-            this.branches=branchMenus;
-            return this.branches==branchMenus;
+            this.branches = branchMenus;
+            return this.branches == branchMenus;
         }
 
         public string SetDescriptor(string _descriptor)
         {
-            this._descriptor=_descriptor;
+            this._descriptor = _descriptor;
             return _descriptor;
         }
 
         public bool SetSuper(IMenu menu)
         {
-            this.super=menu;
-            return super==menu;
+            this.super = menu;
+            return super == menu;
         }
-        
+
     }
 }

@@ -20,30 +20,22 @@ namespace DPcode.UI
 
         #region Main menu   
 
-        public const string addPetCommand = "Add pet";
+        public const string addPetCommand = DPcode.Core.Constants.addPetCommand;
 
-        public const string updatePetCommand = "Update pet";
+        public const string updatePetCommand = DPcode.Core.Constants.updatePetCommand;
 
-        public const string listPetsCommand = "List pets";
+        public const string listPetsCommand = DPcode.Core.Constants.listPetsCommand;
 
-        public const string deletePetCommand = "Delete pet";
+        public const string deletePetCommand = DPcode.Core.Constants.deletePetCommand;
         
-        public const string endSessionString = "End session.";
-
-        public static IMenu[] menus = new IMenu[]{
-        new Menu(Constants.addPetCommand),
-        new Menu(Constants.listPetsCommand),
-        new Menu(Constants.updatePetCommand),
-        new Menu(Constants.deletePetCommand)};
-
-        public static IMenu menu = new Menu("intial menu", menus);
+        public const string endSessionString = "Exit.";
 
         #endregion
 
         #region Update menu
 
         
-        public const string stopUpdate = "End updating";
+        public const string stopUpdate = "Finish updating";
 
         public static IMenu[] updateMenuSubMenus = new IMenu[]{
         new Menu(PetAttribute.name.ToString()),
