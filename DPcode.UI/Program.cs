@@ -27,7 +27,6 @@ namespace DPcode.UI
         TODO    Sort Pets By Price
         TODO    Get 5 cheapest available Pets
         done    Code Available on Github
-        asd
         */
 
         static bool stop = false;
