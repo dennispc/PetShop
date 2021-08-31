@@ -19,14 +19,14 @@ namespace DPcode.UI
         done    Show list of choices (Pure UI, Add one choice at a time) 
         done    Show list of all Pets
         done    Use dependency injection with service collection
-        TODO    Search Pets by Type (Cat, Dog, Goat) *Yes Goats can be pets :D
-        TODO    Find a way to make constants less coupled
+        done    Search Pets by Type (Cat, Dog, Goat) *Yes Goats can be pets :D
         done    Create a new Pet
         done    Delete Pet
         done    Update a Pet
+        done    Code Available on Github
         TODO    Sort Pets By Price
         TODO    Get 5 cheapest available Pets
-        done    Code Available on Github
+        TODO    Find a way to make constants less coupled
         */
 
         static bool stop = false;

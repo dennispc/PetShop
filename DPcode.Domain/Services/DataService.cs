@@ -9,22 +9,27 @@ namespace DPcode.Domain.Services
     public class DataService : IDataService
     {
         private IFakeDB _fakeDB;
-        public DataService(IFakeDB fakeDB){
-            this._fakeDB=fakeDB;
+        private IPetTypeRepository _petTypeRepository;
+        public DataService(IFakeDB fakeDB, IPetTypeRepository petTypeRepository)
+        {
+            this._fakeDB = fakeDB;
+            this._petTypeRepository = petTypeRepository;
             for (int i = 0; i < 5; i++)
             {
                 Pet p = new Pet();
                 p.name = "petname" + i;
-                p.price = (1332 + i);
+                if(i == 1|| i==3)
+                    p.type= _petTypeRepository.GetAsPetType("type");
+                p.price = (1333 + i);
                 AddPet(p);
             }
         }
         public Pet AddPet(Pet pet)
         {
-            if(_fakeDB.GetAllPets().Count()>0)
-            pet.SetId(_fakeDB.GetAllPets().Max(p=>p.GetId()??0)+1);
+            if (_fakeDB.GetAllPets().Count() > 0)
+                pet.SetId(_fakeDB.GetAllPets().Max(p => p.GetId() ?? 0) + 1);
             else
-            pet.SetId(1);
+                pet.SetId(1);
             return _fakeDB.AddPet(pet);
         }
 
@@ -42,9 +47,25 @@ namespace DPcode.Domain.Services
         public Pet? UpdatePet(Pet updatedPet)
         {
             IEnumerable<Pet> pets = _fakeDB.GetAllPets();
-            Pet? pet = pets.First(p=>p.GetId()==updatedPet.GetId());
+            Pet? pet = pets.First(p => p.GetId() == updatedPet.GetId());
             return _fakeDB.UpdatePet(updatedPet);
-            
+
         }
+
+        public bool PetTypeExists(string type)
+        {
+            return _petTypeRepository.PetTypeExists(type);
+        }
+
+        public List<Pet> GetPetsOfType(string petType)
+        {
+            if (PetTypeExists(petType))
+                {   
+                    return _fakeDB.GetPetsOfType(_petTypeRepository.GetAsPetType(petType));
+                }
+                else 
+                return null;
+        }
+
     }
 }

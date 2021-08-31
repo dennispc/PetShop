@@ -7,5 +7,8 @@ namespace DPcode.Infrastructure.Data.IRepositories
     {
         PetType GetAsPetType(string type);
         
+        bool PetTypeExists(string petType);
+
+        IEnumerable<PetType> GetPetTypes();
     }
 }

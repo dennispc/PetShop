@@ -13,5 +13,9 @@ namespace DPcode.Domain.IServices
         Pet? UpdatePet(Pet updatedPet);
 
         List<Pet> GetAllPets();
+
+        List<Pet> GetPetsOfType(string petType);
+
+        bool PetTypeExists(string type);
     }
 }

@@ -20,5 +20,7 @@ namespace DPcode.UI.IService{
         int? GetPetIdFromTerminal(string str);
         void DeletePet();
         void UpdatePet();
+
+        void GetPetsOfType();
     }
 }

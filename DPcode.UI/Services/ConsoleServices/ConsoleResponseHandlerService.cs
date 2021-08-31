@@ -30,6 +30,7 @@ namespace DPcode.Infrastructure.UI.Services
                 case Constants.listPetsCommand: ListPets(); break;
                 case Constants.updatePetCommand: UpdatePet(); break;
                 case Constants.deletePetCommand: DeletePet(); break;
+                case Constants.searchPetsByType: SearchPetsByType(); break;
                 case Constants.endSessionString: Program.FlipStopBool(); break;
                 default: Console.WriteLine(Constants.invalidAction); break;
             }
@@ -60,6 +61,9 @@ namespace DPcode.Infrastructure.UI.Services
             _consoleAskerService.UpdatePet();
         }
 
+        public void SearchPetsByType(){
+            _consoleAskerService.GetPetsOfType();
+        }
         #endregion
     }
 }

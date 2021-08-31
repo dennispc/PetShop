@@ -27,6 +27,8 @@ namespace DPcode.UI
         public const string listPetsCommand = DPcode.Core.Constants.listPetsCommand;
 
         public const string deletePetCommand = DPcode.Core.Constants.deletePetCommand;
+
+        public const string searchPetsByType = DPcode.Core.Constants.searchPetsByType;
         
         public const string endSessionString = "Exit.";
 

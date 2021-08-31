@@ -8,5 +8,7 @@ namespace DPcode.Core{
         public const string listPetsCommand = "List pets";
 
         public const string deletePetCommand = "Delete pet";
-    }
+
+        public const string searchPetsByType = "Search pets by type";
+     }
 }

@@ -123,6 +123,18 @@ namespace DPcode.Infrastructure.UI.Services
             }
         }
 
+
+        public void GetPetsOfType()
+        {
+            string str = GetStringFromTerminal("PetType: ");
+            List<Pet> petsOfType = _dataService.GetPetsOfType(str);
+            if (petsOfType != null)
+            {
+                foreach (Pet p in petsOfType)
+                    Console.WriteLine(p.ToString());
+            }
+        }
+
         public void UpdatePet()
         {
             List<Pet> pets = _dataService.GetAllPets();
@@ -183,6 +195,8 @@ namespace DPcode.Infrastructure.UI.Services
             }
         }
     }
+
+
 
     #endregion
 }

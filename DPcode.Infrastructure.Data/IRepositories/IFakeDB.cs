@@ -15,5 +15,6 @@ namespace DPcode.Infrastructure.Data.IRepositories
 
         IEnumerable<Pet> GetAllPets();
         
+        List<Pet> GetPetsOfType(PetType petType);
     }
 }

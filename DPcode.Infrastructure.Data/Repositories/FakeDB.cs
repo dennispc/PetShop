@@ -27,6 +27,11 @@ namespace DPcode.Infrastructure.Data.Repositories
             return pets;
         }
 
+        public List<Pet> GetPetsOfType(PetType petType)
+        {
+            return pets.Where(p=> p.type == petType).ToList();
+        }
+
 #nullable enable
         public Pet? UpdatePet(Pet pet)
         {
