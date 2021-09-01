@@ -22,5 +22,6 @@ namespace DPcode.UI.IService{
         void UpdatePet();
 
         void GetPetsOfType();
+        void PrintPetsByPriceAscending();
     }
 }

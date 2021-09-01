@@ -17,5 +17,7 @@ namespace DPcode.Domain.IServices
         List<Pet> GetPetsOfType(string petType);
 
         bool PetTypeExists(string type);
+
+        List<Pet> GetFiveCheapestPets();
     }
 }

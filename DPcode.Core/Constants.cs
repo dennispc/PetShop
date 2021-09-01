@@ -9,6 +9,11 @@ namespace DPcode.Core{
 
         public const string deletePetCommand = "Delete pet";
 
+        
+        public const string printPetsByPriceAscending = "List pets by price ascending";
+
         public const string searchPetsByType = "Search pets by type";
+
+        public const string printFiveCheapestPets = "Print 5 cheapest pets";
      }
 }

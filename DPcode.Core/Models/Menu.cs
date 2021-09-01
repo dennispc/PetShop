@@ -17,8 +17,10 @@ namespace DPcode.Core.Models
             new Menu(Constants.addPetCommand),
             new Menu(Constants.listPetsCommand),
             new Menu(Constants.updatePetCommand),
+            new Menu(Constants.printPetsByPriceAscending),
             new Menu(Constants.deletePetCommand),
-            new Menu(Constants.searchPetsByType)};
+            new Menu(Constants.searchPetsByType),
+            new Menu(Constants.printFiveCheapestPets)};
         }
         
         public Menu(string _descriptor, params IMenu[] menus)

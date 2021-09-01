@@ -13,5 +13,9 @@ namespace DPcode.UI.IService
 
         void DeletePet();
 
+        void PrintPetsByPriceAscending();
+
+
+        void PrintFiveCheapestPets();
     }
 }

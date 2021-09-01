@@ -194,6 +194,13 @@ namespace DPcode.Infrastructure.UI.Services
                     Console.WriteLine(Constants.petNotFound);
             }
         }
+
+        public void PrintPetsByPriceAscending(){
+            List<Pet> pets = _dataService.GetAllPets();
+            pets.Sort(Comparer<Pet>.Create((x,y)=> x.price > y.price ?  1 : x.price < y.price ?  -1 : 0));
+            foreach(Pet p in pets)
+                Console.WriteLine(p.ToString());
+        }
     }
 
 

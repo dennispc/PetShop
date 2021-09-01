@@ -24,29 +24,27 @@ namespace DPcode.UI
         done    Delete Pet
         done    Update a Pet
         done    Code Available on Github
-        TODO    Sort Pets By Price
-        TODO    Get 5 cheapest available Pets
-        TODO    Find a way to make constants less coupled
+        done    Sort Pets By Price
+        done    Get 5 cheapest available Pets
+        TODO    Clean this stuff up
         */
 
         static bool stop = false;
 
-        
-
-            static IConsoleTreeHandlerService consoleTreeHandlerService;
-            static IConsoleResponseHandlerService consoleResponseHandlerService;
+        static IConsoleTreeHandlerService consoleTreeHandlerService;
+        static IConsoleResponseHandlerService consoleResponseHandlerService;
 
         static void Main(string[] args)
         {
             ServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddScoped<IMenu,Menu>();
-            serviceCollection.AddScoped<IFakeDB,FakeDB>();
-            serviceCollection.AddScoped<IPetTypeRepository,PetTypeRepository>();
-            serviceCollection.AddScoped<IPetTypeService,PetTypeService>();
-            serviceCollection.AddScoped<IDataService,DataService>();
-            serviceCollection.AddScoped<IConsoleAskerService,ConsoleAskerService>();
-            serviceCollection.AddScoped<IConsoleTreeHandlerService,ConsoleTreeHandlerService>();
-            serviceCollection.AddScoped<IConsoleResponseHandlerService,ConsoleResponseHandlerService>();
+            serviceCollection.AddScoped<IMenu, Menu>();
+            serviceCollection.AddScoped<IFakeDB, FakeDB>();
+            serviceCollection.AddScoped<IPetTypeRepository, PetTypeRepository>();
+            serviceCollection.AddScoped<IPetTypeService, PetTypeService>();
+            serviceCollection.AddScoped<IDataService, DataService>();
+            serviceCollection.AddScoped<IConsoleAskerService, ConsoleAskerService>();
+            serviceCollection.AddScoped<IConsoleTreeHandlerService, ConsoleTreeHandlerService>();
+            serviceCollection.AddScoped<IConsoleResponseHandlerService, ConsoleResponseHandlerService>();
 
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 

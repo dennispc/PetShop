@@ -28,7 +28,10 @@ namespace DPcode.UI
 
         public const string deletePetCommand = DPcode.Core.Constants.deletePetCommand;
 
+        public const string printPetsByPriceAscending = DPcode.Core.Constants.printPetsByPriceAscending;
         public const string searchPetsByType = DPcode.Core.Constants.searchPetsByType;
+
+        public const string printFiveCheapestPets = DPcode.Core.Constants.printFiveCheapestPets;
         
         public const string endSessionString = "Exit.";
 

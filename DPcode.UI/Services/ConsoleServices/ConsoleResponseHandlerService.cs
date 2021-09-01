@@ -30,8 +30,10 @@ namespace DPcode.Infrastructure.UI.Services
                 case Constants.listPetsCommand: ListPets(); break;
                 case Constants.updatePetCommand: UpdatePet(); break;
                 case Constants.deletePetCommand: DeletePet(); break;
+                case Constants.printPetsByPriceAscending: PrintPetsByPriceAscending(); break;
                 case Constants.searchPetsByType: SearchPetsByType(); break;
                 case Constants.endSessionString: Program.FlipStopBool(); break;
+                case Constants.printFiveCheapestPets: PrintFiveCheapestPets(); break;
                 default: Console.WriteLine(Constants.invalidAction); break;
             }
             Program.Init();
@@ -64,6 +66,16 @@ namespace DPcode.Infrastructure.UI.Services
         public void SearchPetsByType(){
             _consoleAskerService.GetPetsOfType();
         }
+
+        public void PrintPetsByPriceAscending(){
+            _consoleAskerService.PrintPetsByPriceAscending();
+        }
+
+        public void PrintFiveCheapestPets(){
+            foreach(Pet pet in _dataService.GetFiveCheapestPets())
+                Console.WriteLine(pet.ToString());
+        }
+
         #endregion
     }
 }

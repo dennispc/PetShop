@@ -3,6 +3,7 @@ using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Domain.IServices;
 using DPcode.Infrastructure.Data.IRepositories;
+using System;
 
 namespace DPcode.Domain.Services
 {
@@ -14,11 +15,11 @@ namespace DPcode.Domain.Services
         {
             this._fakeDB = fakeDB;
             this._petTypeRepository = petTypeRepository;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Pet p = new Pet();
                 p.name = "petname" + i;
-                if(i == 1|| i==3)
+                if(i == 1)
                     p.type= _petTypeRepository.GetAsPetType("type");
                 p.price = (1333 + i);
                 AddPet(p);
@@ -67,5 +68,21 @@ namespace DPcode.Domain.Services
                 return null;
         }
 
+
+    public List<Pet> GetFiveCheapestPets(){
+        List<Pet> fiveCheapestPets = new List<Pet>();
+        _fakeDB.GetAllPets().OrderBy(p=>p.price);
+        for(int i = 0 ; i < 5 ; i++){
+            try{
+            Pet pet = _fakeDB.GetAllPets().First(p=>!fiveCheapestPets.Contains(p));
+            fiveCheapestPets.Add(pet);
+            }
+            catch(System.InvalidOperationException){
+                Console.WriteLine("Not five pets");
+                return fiveCheapestPets;
+            }
+        }
+        return fiveCheapestPets;
+    }
     }
 }
