@@ -14,10 +14,13 @@ namespace DPcode.Domain.IServices
 
         List<Pet> GetAllPets();
 
-        List<Pet> GetPetsOfType(string petType);
+#nullable enable
+        List<Pet>? GetPetsOfType(string petType);
 
         bool PetTypeExists(string type);
 
         List<Pet> GetFiveCheapestPets();
+
+        Pet GetPet(int id);
     }
 }

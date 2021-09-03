@@ -1,8 +1,8 @@
 using DPcode.Core.Models;
 using DPcode.Infrastructure.Data.IRepositories;
-using DPcode.UI.IService;
+using DPcode.Domain.IServices;
 
-namespace DPcode.UI.Services
+namespace DPcode.Domain.Services
 {
     public class PetTypeService : IPetTypeService
     {

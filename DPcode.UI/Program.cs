@@ -7,7 +7,6 @@ using DPcode.Infrastructure.Data.Repositories;
 using DPcode.Infrastructure.UI.IService;
 using DPcode.Infrastructure.UI.Services;
 using DPcode.UI.IService;
-using DPcode.UI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DPcode.UI

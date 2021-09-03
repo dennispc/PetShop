@@ -9,7 +9,7 @@ namespace DPcode.Infrastructure.Data.Repositories
     {
 
 
-        private List<Pet> pets = new List<Pet>();
+        private static List<Pet> pets = new List<Pet>();
 
         public Pet AddPet(Pet pet)
         {

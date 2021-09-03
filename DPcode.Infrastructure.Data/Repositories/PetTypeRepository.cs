@@ -22,7 +22,6 @@ namespace DPcode.Infrastructure.Data.Repositories
             try{
             petType = petTypes.First(pt => pt.type == type);
             }catch(System.InvalidOperationException){
-                Console.WriteLine("Type doesnt exist, making type...");
             
                 petType = new PetType(type);
                 petType.SetId(Utils.GetMaxId(new List<IIdentifyable>(petTypes)));

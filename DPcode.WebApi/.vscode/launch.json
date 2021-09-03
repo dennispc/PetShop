@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/DPcode.WebApi/bin/Debug/net5.0/DPcode.WebApi.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/DPcode.WebApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/DPcode.WebApi",
+            "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -21,9 +21,13 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/DPcode.WebApi/Views"
+                "/Views": "${workspaceFolder}/Views"
             }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
         }
-
     ]
 }

@@ -1,6 +1,6 @@
 using DPcode.Core.Models;
 
-namespace DPcode.UI.IService
+namespace DPcode.Domain.IServices
 {
     public interface IPetTypeService
     {

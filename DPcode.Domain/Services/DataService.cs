@@ -15,14 +15,17 @@ namespace DPcode.Domain.Services
         {
             this._fakeDB = fakeDB;
             this._petTypeRepository = petTypeRepository;
-            for (int i = 0; i < 3; i++)
+            if (_fakeDB.GetAllPets().Count() < 1)
             {
-                Pet p = new Pet();
-                p.name = "petname" + i;
-                if(i == 1)
-                    p.type= _petTypeRepository.GetAsPetType("type");
-                p.price = (1333 + i);
-                AddPet(p);
+                for (int i = 0; i < 3; i++)
+                {
+                    Pet p = new Pet();
+                    p.name = "petname" + i;
+                    if (i == 1)
+                        p.type = _petTypeRepository.GetAsPetType("type");
+                    p.price = (1333 + i);
+                    AddPet(p);
+                }
             }
         }
         public Pet AddPet(Pet pet)
@@ -53,36 +56,55 @@ namespace DPcode.Domain.Services
 
         }
 
+        public Pet? GetPet(int id)
+        {
+            IEnumerable<Pet> pets = _fakeDB.GetAllPets();
+            try
+            {
+                Pet? pet = pets.First(p => p.GetId() == id);
+                return pet;
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
+        }
+
         public bool PetTypeExists(string type)
         {
             return _petTypeRepository.PetTypeExists(type);
         }
 
-        public List<Pet> GetPetsOfType(string petType)
+#nullable enable
+        public List<Pet>? GetPetsOfType(string petType)
         {
             if (PetTypeExists(petType))
-                {   
-                    return _fakeDB.GetPetsOfType(_petTypeRepository.GetAsPetType(petType));
-                }
-                else 
+            {
+                return _fakeDB.GetPetsOfType(_petTypeRepository.GetAsPetType(petType));
+            }
+            else
                 return null;
         }
 
 
-    public List<Pet> GetFiveCheapestPets(){
-        List<Pet> fiveCheapestPets = new List<Pet>();
-        _fakeDB.GetAllPets().OrderBy(p=>p.price);
-        for(int i = 0 ; i < 5 ; i++){
-            try{
-            Pet pet = _fakeDB.GetAllPets().First(p=>!fiveCheapestPets.Contains(p));
-            fiveCheapestPets.Add(pet);
+        public List<Pet> GetFiveCheapestPets()
+        {
+            List<Pet> fiveCheapestPets = new List<Pet>();
+            _fakeDB.GetAllPets().OrderBy(p => p.price);
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    Pet pet = _fakeDB.GetAllPets().First(p => !fiveCheapestPets.Contains(p));
+                    fiveCheapestPets.Add(pet);
+                }
+                catch (System.InvalidOperationException)
+                {
+                    Console.WriteLine("Not five pets");
+                    return fiveCheapestPets;
+                }
             }
-            catch(System.InvalidOperationException){
-                Console.WriteLine("Not five pets");
-                return fiveCheapestPets;
-            }
+            return fiveCheapestPets;
         }
-        return fiveCheapestPets;
-    }
     }
 }
