@@ -46,6 +46,7 @@ namespace DPcode.UI
         new Menu(PetAttribute.name.ToString()),
         new Menu(PetAttribute.price.ToString()),
         new Menu(PetAttribute.type.ToString()),
+        new Menu(PetAttribute.owner.ToString()),
         new Menu(PetAttribute.birthDate.ToString()),
         new Menu(PetAttribute.soldDate.ToString())};
         

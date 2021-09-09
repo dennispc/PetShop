@@ -44,6 +44,9 @@ namespace DPcode.UI
             serviceCollection.AddScoped<IConsoleAskerService, ConsoleAskerService>();
             serviceCollection.AddScoped<IConsoleTreeHandlerService, ConsoleTreeHandlerService>();
             serviceCollection.AddScoped<IConsoleResponseHandlerService, ConsoleResponseHandlerService>();
+            serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
+            serviceCollection.AddScoped<IOwnerService, OwnerService>();
+            
 
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 

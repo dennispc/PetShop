@@ -56,16 +56,19 @@ namespace DPcode.Domain.Services
 
         }
 
+#nullable enable
         public Pet? GetPet(int id)
         {
             IEnumerable<Pet> pets = _fakeDB.GetAllPets();
             try
             {
                 Pet? pet = pets.First(p => p.GetId() == id);
+#nullable disable
                 return pet;
             }
             catch (System.InvalidOperationException)
             {
+
                 return null;
             }
         }

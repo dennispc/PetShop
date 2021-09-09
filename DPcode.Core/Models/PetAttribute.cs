@@ -6,6 +6,7 @@ namespace DPcode.Core.Models
         price,
         type,
         birthDate,
-        soldDate
+        soldDate,
+        owner
     }
 }

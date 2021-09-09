@@ -13,11 +13,13 @@ namespace DPcode.Infrastructure.UI.Services
 
         private IPetTypeService _petTypeService;
         private IDataService _dataService;
+        private IOwnerService _OwnerService;
 
-        public ConsoleAskerService(IPetTypeService petTypeService, IDataService dataService)
+        public ConsoleAskerService(IPetTypeService petTypeService, IDataService dataService, IOwnerService ownerService)
         {
             this._petTypeService = petTypeService;
             this._dataService = dataService;
+            this._OwnerService = ownerService;
         }
 
         #region terminalqueries
@@ -170,6 +172,11 @@ namespace DPcode.Infrastructure.UI.Services
                                     p2.type = _petTypeService.GetAsPetType(GetStringFromTerminal($"new type(old: {p2.GetPetTypeAsString() }): "));
                                     break;
                                 }
+                            case "owner":
+                                {
+                                    p2.owner = _OwnerService.GetAsOwner(GetStringFromTerminal($"new owner(old: {p2.GetPetTypeAsString() }):"));
+                                    break;
+                                }
                             case "birthDate":
                                 {
                                     p2.birthDate = GetDateTimeFromTerminal($"new birthdate(old: {p2.GetBirthDateAsString()}): ");
@@ -195,10 +202,11 @@ namespace DPcode.Infrastructure.UI.Services
             }
         }
 
-        public void PrintPetsByPriceAscending(){
+        public void PrintPetsByPriceAscending()
+        {
             List<Pet> pets = _dataService.GetAllPets();
-            pets.Sort(Comparer<Pet>.Create((x,y)=> x.price > y.price ?  1 : x.price < y.price ?  -1 : 0));
-            foreach(Pet p in pets)
+            pets.Sort(Comparer<Pet>.Create((x, y) => x.price > y.price ? 1 : x.price < y.price ? -1 : 0));
+            foreach (Pet p in pets)
                 Console.WriteLine(p.ToString());
         }
     }

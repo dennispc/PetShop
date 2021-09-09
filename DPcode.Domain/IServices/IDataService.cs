@@ -21,6 +21,7 @@ namespace DPcode.Domain.IServices
 
         List<Pet> GetFiveCheapestPets();
 
-        Pet GetPet(int id);
+#nullable enable
+        Pet? GetPet(int id);
     }
 }

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using DPcode.Core.Models;
 namespace DPcode.Core.Models
 {
-    public class Pet : IIdentifyable
+    public class Pet : Identifyable
     {
 
-        private int _id;
 
         public string name { get; set; }
 
@@ -23,7 +22,8 @@ namespace DPcode.Core.Models
 
         public double price { get; set; }
 
-        public Pet(){}
+#nullable enable
+        public Owner? owner{get;set;}
 
         public string GetPetTypeAsString()
         {
@@ -39,22 +39,12 @@ namespace DPcode.Core.Models
         public override string ToString()
         {
             string concat = "";
-            string[] attributes = new string[] { _id.ToString(), name, age.ToString(), price.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString() };
+            string[] attributes = new string[] { _id.ToString(), name, age.ToString(), price.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString(), owner==null?"":owner.name };
             for (int i = 0; i < attributes.Length; i++)
             {
                 concat += attributes[i] + (attributes.Length - 1 == i ? "" : " ; ");
             }
             return concat;
-        }
-
-        public int? GetId()
-        {
-            return _id;
-        }
-
-        public void SetId(int id)
-        {
-            this._id = id;
         }
 
         public Pet ClonePet()
