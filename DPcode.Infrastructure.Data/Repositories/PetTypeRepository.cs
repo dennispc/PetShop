@@ -24,7 +24,7 @@ namespace DPcode.Infrastructure.Data.Repositories
             }catch(System.InvalidOperationException){
             
                 petType = new PetType(type);
-                petType.SetId(Utils.GetMaxId(new List<Identifyable>(petTypes)));
+                petType.id=(Utils.GetMaxId(petTypes));
                 petTypes.Add(petType);
             }
             return petType;

@@ -5,7 +5,7 @@ namespace DPcode.Core.Models
         public string name{get;set;}
      
 
-        public Owner(string type){
+        public Owner(string name){
             this.name = name;
         }
 

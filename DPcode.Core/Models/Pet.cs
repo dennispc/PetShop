@@ -6,7 +6,6 @@ namespace DPcode.Core.Models
     public class Pet : Identifyable
     {
 
-
         public string name { get; set; }
 
         public int age { get => (DateTime.Compare(birthDate ?? DateTime.Now, DateTime.Now))==-1?0:(DateTime.Compare(birthDate ?? DateTime.Now, DateTime.Now)); }
@@ -39,7 +38,7 @@ namespace DPcode.Core.Models
         public override string ToString()
         {
             string concat = "";
-            string[] attributes = new string[] { _id.ToString(), name, age.ToString(), price.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString(), owner==null?"":owner.name };
+            string[] attributes = new string[] { id.ToString(), name, age.ToString(), price.ToString(), GetPetTypeAsString(), GetBirthDateAsString(), GetSoldDateAsString(), owner==null?"":owner.name };
             for (int i = 0; i < attributes.Length; i++)
             {
                 concat += attributes[i] + (attributes.Length - 1 == i ? "" : " ; ");
@@ -50,7 +49,7 @@ namespace DPcode.Core.Models
         public Pet ClonePet()
         {
             Pet pet = new Pet();
-            pet.SetId((this.GetId() ?? 0));
+            pet.id=((this.id ?? 0));
             pet.name = this.name;
             pet.type = this.type;
             pet.soldDate = this.soldDate;

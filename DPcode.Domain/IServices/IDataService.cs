@@ -12,7 +12,7 @@ namespace DPcode.Domain.IServices
 #nullable enable
         Pet? UpdatePet(Pet updatedPet);
 
-        List<Pet> GetAllPets();
+        IEnumerable<Pet> GetAllPets();
 
 #nullable enable
         List<Pet>? GetPetsOfType(string petType);
@@ -23,5 +23,7 @@ namespace DPcode.Domain.IServices
 
 #nullable enable
         Pet? GetPet(int id);
+
+        List<Pet> GetAllPetsAsList();
     }
 }

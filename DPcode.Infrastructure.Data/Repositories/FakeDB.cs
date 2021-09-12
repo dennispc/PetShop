@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DPcode.Core.Models;
@@ -38,19 +39,23 @@ namespace DPcode.Infrastructure.Data.Repositories
             if (pet != null)
             {
 #nullable enable
-                Pet? validPet = pets.First(p => p.GetId() == pet.GetId());
+                Pet? validPet = pets.First(p => p.id == pet.id);
                 if (validPet != null)
                 {
 #nullable disable
+                    if(validPet.name!=null)
                     validPet.name = pet.name;
+                    if(validPet.type!=null)
                     validPet.type = pet.type;
+                    if(validPet.soldDate!=null)
                     validPet.soldDate = pet.soldDate;
                     validPet.price = pet.price;
+                    if(validPet.birthDate!=null)
                     validPet.birthDate = pet.birthDate;
                     return validPet;
                 }
             }
-            return null;
+            throw new ArgumentException("Pet not found");
         }
 
     }

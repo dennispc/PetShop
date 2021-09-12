@@ -17,6 +17,9 @@ using DPcode.Infrastructure.Data.IRepositories;
 using DPcode.Domain.Services;
 using DPcode.Core.Models;
 using DPcode.Infrastructure.Data.Repositories;
+using DPcode.WebApi.IConverters;
+using DPcode.WebApi.Converters;
+
 
 namespace DPcode.WebApi
 {
@@ -41,7 +44,10 @@ namespace DPcode.WebApi
             services.AddScoped<IFakeDB, FakeDB>();
             services.AddScoped<IPetTypeRepository, PetTypeRepository>();
             services.AddScoped<IPetTypeService, PetTypeService>();
+            services.AddScoped<IOwnerRepository,OwnerRepository>();
+            services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IDataService, DataService>();
+            services.AddScoped<IPetConverter,PetConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

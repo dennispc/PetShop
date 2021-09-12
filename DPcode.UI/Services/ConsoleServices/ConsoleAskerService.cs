@@ -111,11 +111,11 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void DeletePet()
         {
-            List<Pet> pets = _dataService.GetAllPets();
+            List<Pet> pets = _dataService.GetAllPetsAsList();
             int? id = GetPetIdFromTerminal("Id of pet to delete");
             if (id != null)
             {
-                Pet p = pets.Find(p => p.GetId() == id);
+                Pet p = pets.Find(p => p.id == id);
                 if (p != null && GetConfirmation($"Confirm deleting pet ({p.ToString()})"))
                     _dataService.DeletePet(p);
                 else
@@ -139,11 +139,11 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void UpdatePet()
         {
-            List<Pet> pets = _dataService.GetAllPets();
+            List<Pet> pets = _dataService.GetAllPetsAsList();
             int? id = GetPetIdFromTerminal("Id of pet to update");
             if (id != null)
             {
-                Pet p = pets.Find(p => p.GetId() == id);
+                Pet p = pets.Find(p => p.id == id);
                 if (p != null && GetConfirmation($"Confirm updating pet ({p.ToString()})"))
                 {
                     IConsoleTreeHandlerService consoleTreeHandler = new ConsoleTreeHandlerService(Constants.updateMenu, this, Constants.stopUpdate);
@@ -204,7 +204,7 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void PrintPetsByPriceAscending()
         {
-            List<Pet> pets = _dataService.GetAllPets();
+            List<Pet> pets = _dataService.GetAllPetsAsList();
             pets.Sort(Comparer<Pet>.Create((x, y) => x.price > y.price ? 1 : x.price < y.price ? -1 : 0));
             foreach (Pet p in pets)
                 Console.WriteLine(p.ToString());

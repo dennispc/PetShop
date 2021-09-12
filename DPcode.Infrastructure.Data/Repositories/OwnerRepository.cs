@@ -25,9 +25,8 @@ namespace DPcode.Infrastructure.Data.Repositories
             }
             catch (System.InvalidOperationException)
             {
-
                 owner = new Owner(name);
-                owner.SetId(Utils.GetMaxId(new List<Identifyable>(owners)));
+                owner.id=(Utils.GetMaxId(owners));
                 owners.Add(owner);
             }
             return owner;

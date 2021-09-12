@@ -7,33 +7,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DPcode.Domain.IServices;
 using DPcode.Core.Models;
+using DPcode.WebApi.Dtos;
+using DPcode.WebApi.Converters;
+using DPcode.WebApi.IConverters;
 
 namespace DPcode.WebApi.Controllers
+
+//TODO change pettype in petDtos to pettypedto
+//TODO same with owner
+
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PetController : ControllerBase
     {
         private readonly IDataService _dataService;
-        public PetController(IDataService dataService)
+        private readonly IPetConverter _petConverter;
+        public PetController(IDataService dataService, IPetConverter petConverter)
         {
             _dataService = dataService;
+            _petConverter = petConverter;
         }
 
-        [HttpPost()]
+        [HttpPost]
         public ActionResult<Pet> Post(Pet pet)
         {
             Pet p = _dataService.AddPet(pet);
-            return Created($"https://localhost:5001/api/mynew/{p.GetId()}", p);
+            return Created($"https://localhost:5001/pet/{p.id}", p);
         }
 
         [HttpGet]
-        public IEnumerable<Pet> Get()
+        public IEnumerable<PetReadDto> Get()
         {
-            return _dataService.GetAllPets();
+            IEnumerable<PetReadDto> allPetsAsDto = _petConverter.GetAsPetReadDto(_dataService.GetAllPetsAsList());
+            return allPetsAsDto;
         }
 
-        [HttpPatch("{id}")]
+        [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
 #nullable enable
@@ -45,22 +55,44 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpPatch]
-        public ActionResult<Pet> Patch(int id,Pet pet)
+        public ActionResult<PetModifyDto> Patch(int id, PetModifyDto petModifyDto)
         {
-            pet.SetId(id);
+
+#nullable enable
+            Pet? p = null;
             try
             {
-                return StatusCode(202, _dataService.UpdatePet(pet));
+                p = _dataService.GetPet(id);
             }
-            catch (System.InvalidOperationException)
+            catch (ArgumentException ar)
             {
-                throw;  
+                return BadRequest(ar.Message);
             }
+#nullable disable
+            if (p != null)
+            {
+                _petConverter.PutPetValueToPet(p, petModifyDto);
+                return StatusCode(202, petModifyDto);
+            }
+            else return BadRequest();
+
         }
 
-[HttpDelete]
-        public ActionResult<Pet> DeletePet(int id){
-                return StatusCode(202,_dataService.DeletePet(_dataService.GetPet(id)));
+        [HttpDelete]
+        public ActionResult<Pet> Delete(int id)
+        {
+#nullable enable
+            Pet? pet;
+            try
+            {
+                pet = _dataService.GetPet(id);
             }
+            catch (ArgumentException ar)
+            {
+                return BadRequest(ar.Message);
+            }
+#nullable disable
+            return StatusCode(202, _dataService.DeletePet(pet));
         }
     }
+}

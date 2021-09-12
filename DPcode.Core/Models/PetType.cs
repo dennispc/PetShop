@@ -6,6 +6,7 @@ namespace DPcode.Core.Models
             this.type = type;
         }
         public string type{get;set;}
-        
+
+        public PetType(){}
     }
 }

@@ -31,9 +31,9 @@ namespace DPcode.Domain.Services
         public Pet AddPet(Pet pet)
         {
             if (_fakeDB.GetAllPets().Count() > 0)
-                pet.SetId(_fakeDB.GetAllPets().Max(p => p.GetId() ?? 0) + 1);
+                pet.id = (Utils.GetMaxId(_fakeDB.GetAllPets().ToList()));
             else
-                pet.SetId(1);
+                pet.id = 1;
             return _fakeDB.AddPet(pet);
         }
 
@@ -42,16 +42,16 @@ namespace DPcode.Domain.Services
             return _fakeDB.DeletePet(pet);
         }
 
-        public List<Pet> GetAllPets()
+        public IEnumerable<Pet> GetAllPets()
         {
-            return _fakeDB.GetAllPets().ToList();
+            return _fakeDB.GetAllPets();
         }
 
 #nullable enable
         public Pet? UpdatePet(Pet updatedPet)
         {
             IEnumerable<Pet> pets = _fakeDB.GetAllPets();
-            Pet? pet = pets.First(p => p.GetId() == updatedPet.GetId());
+            Pet? pet = pets.First(p => p.id == updatedPet.id);
             return _fakeDB.UpdatePet(updatedPet);
 
         }
@@ -62,14 +62,13 @@ namespace DPcode.Domain.Services
             IEnumerable<Pet> pets = _fakeDB.GetAllPets();
             try
             {
-                Pet? pet = pets.First(p => p.GetId() == id);
+                Pet? pet = pets.First(p => p.id == id);
 #nullable disable
                 return pet;
             }
             catch (System.InvalidOperationException)
             {
-
-                return null;
+                throw new ArgumentException($"no pet with id: {id}");
             }
         }
 
@@ -108,6 +107,11 @@ namespace DPcode.Domain.Services
                 }
             }
             return fiveCheapestPets;
+        }
+
+        public List<Pet> GetAllPetsAsList()
+        {
+            return _fakeDB.GetAllPets().ToList();
         }
     }
 }
