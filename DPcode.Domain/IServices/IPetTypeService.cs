@@ -8,7 +8,7 @@ namespace DPcode.Domain.IServices
         PetType GetAsPetType(string type);
         IEnumerable<PetType> GetPetTypes();
 
-        PetType GetPet(int id);
+        PetType GetPetType(int id);
 
         bool RemovePetType(int id);
 

@@ -36,7 +36,7 @@ namespace DPcode.WebApi.Controllers
             try
             {
                  
-            return _petTypeService.GetPet(id);
+            return _petTypeService.GetPetType(id);
             
             }
             catch (System.ArgumentException ar)

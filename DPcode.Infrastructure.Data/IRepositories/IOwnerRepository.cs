@@ -11,5 +11,8 @@ namespace DPcode.Infrastructure.Data.IRepositories
         bool OwnerExists(string name);
 
         IEnumerable<Owner> GetOwners();
+
+        bool RemoveOwner(Owner owner);
+
     }
 }

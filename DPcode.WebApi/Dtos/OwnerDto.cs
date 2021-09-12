@@ -9,5 +9,7 @@ namespace DPcode.WebApi.Dtos
         {
             name=owner.name;
         }
+
+        public OwnerDto() {}
     }
 }

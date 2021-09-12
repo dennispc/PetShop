@@ -11,10 +11,7 @@ namespace DPcode.Infrastructure.Data.IRepositories
 
         IEnumerable<PetType> GetPetTypes();
 
-        bool RemovePetType(int id);
+        bool RemovePetType(PetType petType);
 
-        bool UpdatePetType(PetType petType);
-
-        PetType GetValidPetTypeFromId(int id);
     }
 }

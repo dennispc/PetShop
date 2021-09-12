@@ -8,7 +8,7 @@ namespace DPcode.Infrastructure.Data.Repositories
     public class OwnerRepository : IOwnerRepository
     {
 
-        private List<Owner> owners = new List<Owner>();
+        private static List<Owner> owners = new List<Owner>();
 
         public OwnerRepository()
         {
@@ -26,7 +26,7 @@ namespace DPcode.Infrastructure.Data.Repositories
             catch (System.InvalidOperationException)
             {
                 owner = new Owner(name);
-                owner.id=(Utils.GetMaxId(owners));
+                owner.id = (Utils.GetMaxId(owners));
                 owners.Add(owner);
             }
             return owner;
@@ -48,6 +48,11 @@ namespace DPcode.Infrastructure.Data.Repositories
         public IEnumerable<Owner> GetOwners()
         {
             return owners;
+        }
+
+        public bool RemoveOwner(Owner owner)
+        {
+            return owners.Remove(owner);
         }
     }
 }

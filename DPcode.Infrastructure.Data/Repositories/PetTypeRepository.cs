@@ -24,9 +24,8 @@ namespace DPcode.Infrastructure.Data.Repositories
             {
                 petType = petTypes.First(pt => pt.type == type);
             }
-            catch (System.InvalidOperationException)
+            catch (InvalidOperationException)
             {
-
                 petType = new PetType(type);
                 petType.id = (Utils.GetMaxId(petTypes));
                 petTypes.Add(petType);
@@ -41,7 +40,7 @@ namespace DPcode.Infrastructure.Data.Repositories
                 petTypes.First(pt => pt.type == petType);
                 return true;
             }
-            catch (System.InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -52,40 +51,15 @@ namespace DPcode.Infrastructure.Data.Repositories
             return petTypes;
         }
 
-        public bool RemovePetType(int id)
+        public bool RemovePetType(PetType petType)
         {
             try
             {
-                return petTypes.Remove(GetValidPetTypeFromId(id));
+                return petTypes.Remove(petType);
             }
             catch (ArgumentException)
             {
                 throw;
-            }
-        }
-
-        public bool UpdatePetType(PetType petType)
-        {
-            try
-            {
-                GetValidPetTypeFromId(petType.id ?? 0).type = petType.type;
-                return true;
-            }
-            catch (ArgumentException)
-            {
-                throw;
-            }
-        }
-
-        public PetType GetValidPetTypeFromId(int id)
-        {
-            try
-            {
-                return petTypes.First(pt => pt.id == id);
-            }
-            catch (System.InvalidOperationException)
-            {
-                throw new System.ArgumentException(Constants.IvalidPetType(id));
             }
         }
     }

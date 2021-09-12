@@ -13,6 +13,18 @@ using DPcode.WebApi.IConverters;
 
 namespace DPcode.WebApi.Controllers
 
+//
+//Done : finished making dtos and controllers for the classes
+//TODO clean up code
+//TODO minimize coupling
+//TODO remove redundant calls
+//TODO entity framework thing
+//
+//
+//
+//
+
+
 {
     [Route("[controller]")]
     [ApiController]
