@@ -8,8 +8,8 @@ namespace DPcode.WebApi.Converters
 {
     public class PetConverter : IPetConverter
     {
-        private IOwnerService _ownerService;
-        private IPetTypeService _petTypeService;
+        private static IOwnerService _ownerService;
+        private static IPetTypeService _petTypeService;
 
         public PetConverter(IPetTypeService petTypeService, IOwnerService ownerService){
             _ownerService=ownerService;
@@ -38,6 +38,21 @@ namespace DPcode.WebApi.Converters
             return p;
         }
 
+        public Pet PetModifyDtoToPet(PetModifyDto pmd)
+        {
+            try{
+            Pet p = new Pet();
+            p.name = pmd.name;
+            p.type = _petTypeService.GetAsPetType(pmd.petType);
+            p.birthDate = pmd.birthDate;
+            p.soldDate = pmd.soldDate;
+            p.price = pmd.price;
+            p.owner = _ownerService.GetAsOwner(pmd.owner);
+            return p;
+            }catch(System.ArgumentException){
+                throw;
+            }
+        }
     }
 
 }

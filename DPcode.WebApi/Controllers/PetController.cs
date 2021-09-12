@@ -19,7 +19,7 @@ namespace DPcode.WebApi.Controllers
 //TODO minimize coupling
 //TODO remove redundant calls
 //TODO entity framework thing
-//
+//TODO make pettype&owner turn into null in pet when deleted from db 
 //
 //
 //
@@ -39,9 +39,10 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Pet> Post(Pet pet)
+        public ActionResult<Pet> Post(PetModifyDto petModifyDto)
         {
-            Pet p = _dataService.AddPet(pet);
+            Pet p = _petConverter.PetModifyDtoToPet(petModifyDto);
+            _dataService.AddPet(p);
             return Created($"https://localhost:5001/pet/{p.id}", p);
         }
 

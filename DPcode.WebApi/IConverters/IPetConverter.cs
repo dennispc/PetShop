@@ -8,5 +8,6 @@ namespace DPcode.WebApi.IConverters
     {
         List<PetReadDto> GetAsPetReadDto(List<Pet> pets);
         Pet PutPetValueToPet(Pet p, PetModifyDto pmd);
+        Pet PetModifyDtoToPet(PetModifyDto pmd);
     }
 }
