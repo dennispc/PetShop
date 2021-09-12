@@ -4,10 +4,14 @@ namespace DPcode.WebApi.Dtos
 {
     public class PetTypeDto
     {
-        public string type{get;set;}
+        public string type { get; set; }
 
-        public PetTypeDto(PetType petType){
+        public PetTypeDto(PetType petType)
+        {
             type = petType.type;
+        }
+        public PetTypeDto()
+        {
         }
 
     }

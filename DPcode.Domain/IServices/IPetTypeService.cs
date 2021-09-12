@@ -9,5 +9,9 @@ namespace DPcode.Domain.IServices
         IEnumerable<PetType> GetPetTypes();
 
         PetType GetPet(int id);
+
+        bool RemovePetType(int id);
+
+        bool UpdatePetType(PetType petType);
     }
 }

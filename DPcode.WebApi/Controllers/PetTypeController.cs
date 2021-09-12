@@ -8,6 +8,7 @@ using DPcode.Domain.IServices;
 using DPcode.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DPcode.WebApi.Converters;
 
 namespace DPcode.WebApi.Controllers
 {
@@ -37,6 +38,31 @@ namespace DPcode.WebApi.Controllers
                  
             return _petTypeService.GetPet(id);
             
+            }
+            catch (System.ArgumentException ar)
+            {
+                return BadRequest(ar.Message);
+            }
+        }
+        [HttpPatch]
+        public ActionResult<PetType> Patch(int id, PetTypeDto petTypeDto){
+            try
+            {
+            PetType pt = PetTypeConverter.PetTypeDtoToPetType(id,petTypeDto);
+            _petTypeService.UpdatePetType(pt);
+            return pt;
+            }
+            catch (System.ArgumentException ar)
+            {
+                return BadRequest(ar.Message);
+            }
+        }
+        
+        [HttpDelete]
+        public ActionResult<bool> Delete(int id){
+            try
+            {
+            return StatusCode(100,_petTypeService.RemovePetType(id));
             }
             catch (System.ArgumentException ar)
             {

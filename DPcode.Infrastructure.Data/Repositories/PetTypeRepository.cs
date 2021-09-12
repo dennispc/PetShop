@@ -9,22 +9,26 @@ namespace DPcode.Infrastructure.Data.Repositories
     public class PetTypeRepository : IPetTypeRepository
     {
 
-        private List<PetType> petTypes = new List<PetType>();
+        private static List<PetType> petTypes = new List<PetType>();
 
-        public PetTypeRepository(){
+        public PetTypeRepository()
+        {
             GetAsPetType("type");
         }
 
         public PetType GetAsPetType(string type)
         {
-            #nullable enable
+#nullable enable
             PetType? petType = null;
-            try{
-            petType = petTypes.First(pt => pt.type == type);
-            }catch(System.InvalidOperationException){
-            
+            try
+            {
+                petType = petTypes.First(pt => pt.type == type);
+            }
+            catch (System.InvalidOperationException)
+            {
+
                 petType = new PetType(type);
-                petType.id=(Utils.GetMaxId(petTypes));
+                petType.id = (Utils.GetMaxId(petTypes));
                 petTypes.Add(petType);
             }
             return petType;
@@ -32,17 +36,57 @@ namespace DPcode.Infrastructure.Data.Repositories
 
         public bool PetTypeExists(string petType)
         {
-            try{
-            petTypes.First(pt => pt.type == petType);
-            return true;
+            try
+            {
+                petTypes.First(pt => pt.type == petType);
+                return true;
             }
-            catch(System.InvalidOperationException){
-            return false;
+            catch (System.InvalidOperationException)
+            {
+                return false;
             }
         }
 
-        public IEnumerable<PetType> GetPetTypes(){
+        public IEnumerable<PetType> GetPetTypes()
+        {
             return petTypes;
+        }
+
+        public bool RemovePetType(int id)
+        {
+            try
+            {
+                return petTypes.Remove(GetValidPetTypeFromId(id));
+            }
+            catch (ArgumentException)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdatePetType(PetType petType)
+        {
+            try
+            {
+                GetValidPetTypeFromId(petType.id ?? 0).type = petType.type;
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                throw;
+            }
+        }
+
+        public PetType GetValidPetTypeFromId(int id)
+        {
+            try
+            {
+                return petTypes.First(pt => pt.id == id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                throw new System.ArgumentException(Constants.IvalidPetType(id));
+            }
         }
     }
 }

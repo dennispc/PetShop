@@ -13,9 +13,6 @@ using DPcode.WebApi.IConverters;
 
 namespace DPcode.WebApi.Controllers
 
-//TODO change pettype in petDtos to pettypedto
-//TODO same with owner
-
 {
     [Route("[controller]")]
     [ApiController]

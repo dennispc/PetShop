@@ -9,8 +9,9 @@ namespace DPcode.Domain.Services
     public class PetTypeService : IPetTypeService
     {
         private IPetTypeRepository _petTypeRepository;
-        public PetTypeService(IPetTypeRepository petTypeRepository){
-            _petTypeRepository=petTypeRepository;
+        public PetTypeService(IPetTypeRepository petTypeRepository)
+        {
+            _petTypeRepository = petTypeRepository;
         }
         public PetType GetAsPetType(string type)
         {
@@ -19,16 +20,43 @@ namespace DPcode.Domain.Services
 
         public PetType GetPet(int id)
         {
-            try{
-            return _petTypeRepository.GetPetTypes().First(pt=>pt.id==id);
+            try
+            {
+                return _petTypeRepository.GetPetTypes().First(pt => pt.id == id);
             }
-            catch(System.InvalidOperationException){
+            catch (System.InvalidOperationException)
+            {
                 throw new System.ArgumentException($"no pet type with id: {id}");
             }
         }
 
-        public IEnumerable<PetType> GetPetTypes(){
+        public IEnumerable<PetType> GetPetTypes()
+        {
             return _petTypeRepository.GetPetTypes();
+        }
+
+        public bool RemovePetType(int id)
+        {
+            try
+            {
+                return _petTypeRepository.RemovePetType(id);
+            }
+            catch (System.ArgumentException)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdatePetType(PetType petType)
+        {
+            try
+            {
+                return _petTypeRepository.UpdatePetType(petType);
+            }
+            catch (System.ArgumentException)
+            {
+                throw;
+            }
         }
     }
 }
