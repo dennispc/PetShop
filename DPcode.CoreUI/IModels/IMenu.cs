@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DPcode.Core.IModel
+namespace DPcode.CoreUI.IModels
 {
     public interface IMenu
     {

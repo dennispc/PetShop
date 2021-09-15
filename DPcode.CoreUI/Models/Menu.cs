@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using DPcode.Core.IModel;
+using DPcode.CoreUI.IModels;
 
-namespace DPcode.Core.Models
+namespace DPcode.CoreUI.Models
 {
     public class Menu : IMenu
     {

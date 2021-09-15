@@ -1,5 +1,5 @@
-﻿using DPcode.Core.IModel;
-using DPcode.Core.Models;
+﻿using DPcode.CoreUI.IModels;
+using DPcode.CoreUI.Models;
 using DPcode.Domain.IServices;
 using DPcode.Domain.Services;
 using DPcode.Infrastructure.Data.IRepositories;

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../DPcode.CoreUI/DPcode.CoreUI.csproj" />
     <ProjectReference Include="../DPcode.Core/DPcode.Core.csproj" />
     <ProjectReference Include="../DPcode.Domain/DPcode.Domain.csproj" />
     <ProjectReference Include="../DPcode.Infrastructure.Data/DPcode.Infrastructure.Data.csproj" />

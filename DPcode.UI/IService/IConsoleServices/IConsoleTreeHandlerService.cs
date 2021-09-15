@@ -1,4 +1,4 @@
-using DPcode.Core.IModel;
+using DPcode.CoreUI.IModels;
 
 namespace DPcode.Infrastructure.UI.IService{
     public interface IConsoleTreeHandlerService{

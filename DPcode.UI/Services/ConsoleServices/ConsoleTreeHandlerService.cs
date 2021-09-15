@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using DPcode.Core.IModel;
+using DPcode.CoreUI.IModels;
 using DPcode.Infrastructure.UI.IService;
 using DPcode.UI.IService;
 using DPcode.UI;
