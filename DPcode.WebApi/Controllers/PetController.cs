@@ -64,8 +64,8 @@ namespace DPcode.WebApi.Controllers
                 return StatusCode(404);
         }
 
-        [HttpPatch]
-        public ActionResult<PetModifyDto> Patch(int id, PetModifyDto petModifyDto)
+        [HttpPut]
+        public ActionResult<PetModifyDto> Put(int id, PetModifyDto petModifyDto)
         {
 
 #nullable enable

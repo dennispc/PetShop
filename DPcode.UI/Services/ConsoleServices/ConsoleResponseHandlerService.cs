@@ -13,9 +13,9 @@ namespace DPcode.Infrastructure.UI.Services
 
         private IDataService _dataService;
 
-        private IPetTypeService _petTypeService;
+        private IService<PetType> _petTypeService;
 
-        public ConsoleResponseHandlerService(IConsoleAskerService consoleAskerService, IDataService dataService, IPetTypeService petTypeService)
+        public ConsoleResponseHandlerService(IConsoleAskerService consoleAskerService, IDataService dataService, IService<PetType> petTypeService)
         {
             this._consoleAskerService = consoleAskerService;
             this._dataService = dataService;

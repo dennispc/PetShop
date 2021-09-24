@@ -6,17 +6,17 @@ using DPcode.Infrastructure.Data.IRepositories;
 
 namespace DPcode.Infrastructure.Data.Repositories
 {
-    public class PetTypeRepository : IPetTypeRepository
+    public class PetTypeRepository : IRepository<PetType>
     {
 
         private static List<PetType> petTypes = new List<PetType>();
 
         public PetTypeRepository()
         {
-            GetAsPetType("type");
+            Make("type");
         }
 
-        public PetType GetAsPetType(string type)
+        public PetType Make(string type)
         {
 #nullable enable
             PetType? petType = null;
@@ -33,7 +33,7 @@ namespace DPcode.Infrastructure.Data.Repositories
             return petType;
         }
 
-        public bool PetTypeExists(string petType)
+        public bool Exists(string petType)
         {
             try
             {
@@ -46,12 +46,12 @@ namespace DPcode.Infrastructure.Data.Repositories
             }
         }
 
-        public IEnumerable<PetType> GetPetTypes()
+        public IEnumerable<PetType> Get()
         {
             return petTypes;
         }
 
-        public bool RemovePetType(PetType petType)
+        public bool Remove(PetType petType)
         {
             try
             {

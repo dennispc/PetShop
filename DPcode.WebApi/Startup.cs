@@ -10,7 +10,7 @@ using DPcode.Domain.Services;
 using DPcode.Infrastructure.Data.Repositories;
 using DPcode.WebApi.IConverters;
 using DPcode.WebApi.Converters;
-
+using DPcode.Core.Models;
 
 namespace DPcode.WebApi
 {
@@ -32,10 +32,10 @@ namespace DPcode.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DPcode.WebApi", Version = "v1" });
             });
             services.AddScoped<IFakeDB, FakeDB>();
-            services.AddScoped<IPetTypeRepository, PetTypeRepository>();
-            services.AddScoped<IPetTypeService, PetTypeService>();
-            services.AddScoped<IOwnerRepository,OwnerRepository>();
-            services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<IRepository<PetType>, PetTypeRepository>();
+            services.AddScoped<IService<PetType>, PetTypeService>();
+            services.AddScoped<IRepository<Owner>,OwnerRepository>();
+            services.AddScoped<IService<Owner>, OwnerService>();
             services.AddScoped<IDataService, DataService>();
             services.AddScoped<IPetConverter,PetConverter>();
         }

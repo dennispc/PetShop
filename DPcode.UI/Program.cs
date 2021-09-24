@@ -1,4 +1,5 @@
-﻿using DPcode.CoreUI.IModels;
+﻿using DPcode.Core.Models;
+using DPcode.CoreUI.IModels;
 using DPcode.CoreUI.Models;
 using DPcode.Domain.IServices;
 using DPcode.Domain.Services;
@@ -38,14 +39,14 @@ namespace DPcode.UI
             ServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IMenu, Menu>();
             serviceCollection.AddScoped<IFakeDB, FakeDB>();
-            serviceCollection.AddScoped<IPetTypeRepository, PetTypeRepository>();
-            serviceCollection.AddScoped<IPetTypeService, PetTypeService>();
+            serviceCollection.AddScoped<IRepository<PetType>, PetTypeRepository>();
+            serviceCollection.AddScoped<IService<PetType>, PetTypeService>();
             serviceCollection.AddScoped<IDataService, DataService>();
             serviceCollection.AddScoped<IConsoleAskerService, ConsoleAskerService>();
             serviceCollection.AddScoped<IConsoleTreeHandlerService, ConsoleTreeHandlerService>();
             serviceCollection.AddScoped<IConsoleResponseHandlerService, ConsoleResponseHandlerService>();
-            serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
-            serviceCollection.AddScoped<IOwnerService, OwnerService>();
+            serviceCollection.AddScoped<IRepository<Owner>, OwnerRepository>();
+            serviceCollection.AddScoped<IService<Owner>, OwnerService>();
             
 
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();

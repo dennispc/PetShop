@@ -8,10 +8,10 @@ namespace DPcode.WebApi.Converters
 {
     public class PetConverter : IPetConverter
     {
-        private static IOwnerService _ownerService;
-        private static IPetTypeService _petTypeService;
+        private static IService<Owner> _ownerService;
+        private static IService<PetType> _petTypeService;
 
-        public PetConverter(IPetTypeService petTypeService, IOwnerService ownerService){
+        public PetConverter(IService<PetType> petTypeService, IService<Owner> ownerService){
             _ownerService=ownerService;
             _petTypeService=petTypeService;
         }
@@ -30,11 +30,11 @@ namespace DPcode.WebApi.Converters
         public Pet PutPetValueToPet(Pet p, PetModifyDto pmd)
         {
             p.name = pmd.name;
-            p.type = _petTypeService.GetAsPetType(pmd.petType);
+            p.type = _petTypeService.Make(pmd.petType);
             p.birthDate = pmd.birthDate;
             p.soldDate = pmd.soldDate;
             p.price = pmd.price;
-            p.owner = _ownerService.GetAsOwner(pmd.owner);
+            p.owner = _ownerService.Make(pmd.owner);
             return p;
         }
 
@@ -43,11 +43,11 @@ namespace DPcode.WebApi.Converters
             try{
             Pet p = new Pet();
             p.name = pmd.name;
-            p.type = _petTypeService.GetAsPetType(pmd.petType);
+            p.type = _petTypeService.Make(pmd.petType);
             p.birthDate = pmd.birthDate;
             p.soldDate = pmd.soldDate;
             p.price = pmd.price;
-            p.owner = _ownerService.GetAsOwner(pmd.owner);
+            p.owner = _ownerService.Make(pmd.owner);
             return p;
             }catch(System.ArgumentException){
                 throw;

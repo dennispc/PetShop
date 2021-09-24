@@ -16,9 +16,9 @@ namespace DPcode.WebApi.Controllers
     public class OwnerController : Controller
     {
 
-        private IOwnerService _ownerService;
+        private IService<Owner> _ownerService;
 
-        public OwnerController(IOwnerService ownerService)
+        public OwnerController(IService<Owner> ownerService)
         {
             _ownerService = ownerService;
         }
@@ -26,13 +26,13 @@ namespace DPcode.WebApi.Controllers
         [HttpPost]
         public ActionResult<Owner> Post(OwnerDto ownerDto)
         {
-            return StatusCode(201, _ownerService.GetAsOwner(ownerDto.name));
+            return StatusCode(201, _ownerService.Make(ownerDto.name));
         }
 
         [HttpGet]
         public IEnumerable<Owner> Get()
         {
-            return _ownerService.GetOwners();
+            return _ownerService.Get();
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace DPcode.WebApi.Controllers
             try
             {
 
-                return _ownerService.GetOwner(id);
+                return _ownerService.Get(id);
 
             }
             catch (System.ArgumentException ar)
@@ -49,13 +49,13 @@ namespace DPcode.WebApi.Controllers
                 return BadRequest(ar.Message);
             }
         }
-        [HttpPatch]
-        public ActionResult<Owner> Patch(int id, OwnerDto OwnerDto)
+        [HttpPut]
+        public ActionResult<Owner> Put(int id, OwnerDto OwnerDto)
         {
             try
             {
                 Owner o = OwnerConverter.OwnerDtoToOwner(id, OwnerDto);
-                _ownerService.UpdateOwner(o);
+                _ownerService.Update(o);
                 return o;
             }
             catch (System.ArgumentException ar)
@@ -69,7 +69,7 @@ namespace DPcode.WebApi.Controllers
         {
             try
             {
-                return StatusCode(100, _ownerService.RemoveOwner(id));
+                return StatusCode(100, _ownerService.Remove(id));
             }
             catch (System.ArgumentException ar)
             {

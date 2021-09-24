@@ -6,38 +6,38 @@ using DPcode.Infrastructure.Data.IRepositories;
 
 namespace DPcode.Domain.Services
 {
-    public class OwnerService : IOwnerService
+    public class OwnerService : IService<Owner>
     {
-        private IOwnerRepository _ownerRepository;
+        private IRepository<Owner> _ownerRepository;
 
-        public OwnerService(IOwnerRepository ownerRepository){
+        public OwnerService(IRepository<Owner> ownerRepository){
             _ownerRepository=ownerRepository;
         }
         
-        public Owner GetAsOwner(string name){
-           return  _ownerRepository.GetAsOwner(name);
+        public Owner Make(string name){
+           return  _ownerRepository.Make(name);
         }
 
-        public Owner GetOwner(int id)
+        public Owner Get(int id)
         {
             try{
-                return _ownerRepository.GetOwners().First(o=>o.id==id);
+                return _ownerRepository.Get().First(o=>o.id==id);
             }
             catch(System.InvalidOperationException){
                 throw new System.ArgumentException(Constants.IvalidOwnerType(id));
             }
         }
 
-        public IEnumerable<Owner> GetOwners()
+        public IEnumerable<Owner> Get()
         {
-            return _ownerRepository.GetOwners();
+            return _ownerRepository.Get();
         }
 
-        public bool RemoveOwner(int id)
+        public bool Remove(int id)
         {
             try
             {
-                 return _ownerRepository.RemoveOwner(GetValidOwnerFromId(id));
+                 return _ownerRepository.Remove(GetValidOwnerFromId(id));
             }
             catch (System.ArgumentException)
             {
@@ -50,7 +50,7 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                return _ownerRepository.GetOwners().First(o => o.id == id);
+                return _ownerRepository.Get().First(o => o.id == id);
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace DPcode.Domain.Services
         }
 
         
-        public bool UpdateOwner(Owner owner)
+        public bool Update(Owner owner)
         {
             try
             {

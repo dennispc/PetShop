@@ -5,17 +5,17 @@ using DPcode.Infrastructure.Data.IRepositories;
 
 namespace DPcode.Infrastructure.Data.Repositories
 {
-    public class OwnerRepository : IOwnerRepository
+    public class OwnerRepository : IRepository<Owner>
     {
 
         private static List<Owner> owners = new List<Owner>();
 
         public OwnerRepository()
         {
-            GetAsOwner("some owner");
+            Make("some owner");
         }
 
-        public Owner GetAsOwner(string name)
+        public Owner Make(string name)
         {
 #nullable enable
             Owner? owner = null;
@@ -32,7 +32,7 @@ namespace DPcode.Infrastructure.Data.Repositories
             return owner;
         }
 
-        public bool OwnerExists(string name)
+        public bool Exists(string name)
         {
             try
             {
@@ -45,12 +45,12 @@ namespace DPcode.Infrastructure.Data.Repositories
             }
         }
 
-        public IEnumerable<Owner> GetOwners()
+        public IEnumerable<Owner> Get()
         {
             return owners;
         }
 
-        public bool RemoveOwner(Owner owner)
+        public bool Remove(Owner owner)
         {
             return owners.Remove(owner);
         }

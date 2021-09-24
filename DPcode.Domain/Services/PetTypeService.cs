@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace DPcode.Domain.Services
 {
-    public class PetTypeService : IPetTypeService
+    public class PetTypeService : IService<PetType>
     {
-        private IPetTypeRepository _petTypeRepository;
-        public PetTypeService(IPetTypeRepository petTypeRepository)
+        private IRepository<PetType> _petTypeRepository;
+        public PetTypeService(IRepository<PetType> petTypeRepository)
         {
             _petTypeRepository = petTypeRepository;
         }
-        public PetType GetAsPetType(string type)
+        public PetType Make(string type)
         {
-            return _petTypeRepository.GetAsPetType(type);
+            return _petTypeRepository.Make(type);
         }
 
-        public PetType GetPetType(int id)
+        public PetType Get(int id)
         {
             try
             {
-                return _petTypeRepository.GetPetTypes().First(pt => pt.id == id);
+                return _petTypeRepository.Get().First(pt => pt.id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -30,16 +30,16 @@ namespace DPcode.Domain.Services
             }
         }
 
-        public IEnumerable<PetType> GetPetTypes()
+        public IEnumerable<PetType> Get()
         {
-            return _petTypeRepository.GetPetTypes();
+            return _petTypeRepository.Get();
         }
 
-        public bool RemovePetType(int id)
+        public bool Remove(int id)
         {
             try
             {
-                return _petTypeRepository.RemovePetType(GetValidPetTypeFromId(id));
+                return _petTypeRepository.Remove(GetValidPetTypeFromId(id));
             }
             catch (System.ArgumentException)
             {
@@ -52,7 +52,7 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                return _petTypeRepository.GetPetTypes().First(pt => pt.id == id);
+                return _petTypeRepository.Get().First(pt => pt.id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -60,7 +60,7 @@ namespace DPcode.Domain.Services
             }
         }
 
-        public bool UpdatePetType(PetType petType)
+        public bool Update(PetType petType)
         {
             try
             {

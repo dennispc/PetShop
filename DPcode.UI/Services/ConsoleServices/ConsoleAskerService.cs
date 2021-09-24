@@ -11,11 +11,11 @@ namespace DPcode.Infrastructure.UI.Services
     public class ConsoleAskerService : IConsoleAskerService
     {
 
-        private IPetTypeService _petTypeService;
+        private IService<PetType> _petTypeService;
         private IDataService _dataService;
-        private IOwnerService _OwnerService;
+        private IService<Owner> _OwnerService;
 
-        public ConsoleAskerService(IPetTypeService petTypeService, IDataService dataService, IOwnerService ownerService)
+        public ConsoleAskerService(IService<PetType> petTypeService, IDataService dataService, IService<Owner> ownerService)
         {
             this._petTypeService = petTypeService;
             this._dataService = dataService;
@@ -104,7 +104,7 @@ namespace DPcode.Infrastructure.UI.Services
             pet.name = GetStringFromTerminal("Name: ");
             pet.birthDate = GetDateTimeFromTerminal("BirthDate(type 0 if unknown): ");
             pet.price = GetDoubleFromTerminal("Price: ");
-            pet.type = _petTypeService.GetAsPetType(GetStringFromTerminal("Type: "));
+            pet.type = _petTypeService.Make(GetStringFromTerminal("Type: "));
 
             return pet;
         }
@@ -169,12 +169,12 @@ namespace DPcode.Infrastructure.UI.Services
                                 }
                             case "type":
                                 {
-                                    p2.type = _petTypeService.GetAsPetType(GetStringFromTerminal($"new type(old: {p2.GetPetTypeAsString() }): "));
+                                    p2.type = _petTypeService.Make(GetStringFromTerminal($"new type(old: {p2.GetPetTypeAsString() }): "));
                                     break;
                                 }
                             case "owner":
                                 {
-                                    p2.owner = _OwnerService.GetAsOwner(GetStringFromTerminal($"new owner(old: {p2.GetPetTypeAsString() }):"));
+                                    p2.owner = _OwnerService.Make(GetStringFromTerminal($"new owner(old: {p2.GetPetTypeAsString() }):"));
                                     break;
                                 }
                             case "birthDate":

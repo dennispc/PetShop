@@ -15,20 +15,20 @@ namespace DPcode.WebApi.Controllers
     [Route("[controller]")]
     public class PetTypeController : Controller
     {
-    private readonly IPetTypeService _petTypeService;
-        public PetTypeController(IPetTypeService petTypeService)
+    private readonly IService<PetType> _petTypeService;
+        public PetTypeController(IService<PetType> petTypeService)
         {
             _petTypeService = petTypeService;
         }
 
         [HttpPost]
         public ActionResult<PetType> Post(PetTypeDto petTypeDto){
-            return StatusCode(201, _petTypeService.GetAsPetType(petTypeDto.type));
+            return StatusCode(201, _petTypeService.Make(petTypeDto.type));
         }
 
         [HttpGet]
         public IEnumerable<PetType> Get(){
-            return _petTypeService.GetPetTypes();
+            return _petTypeService.Get();
         }
 
         [HttpGet("{id}")]
@@ -36,7 +36,7 @@ namespace DPcode.WebApi.Controllers
             try
             {
                  
-            return _petTypeService.GetPetType(id);
+            return _petTypeService.Get(id);
             
             }
             catch (System.ArgumentException ar)
@@ -44,12 +44,12 @@ namespace DPcode.WebApi.Controllers
                 return BadRequest(ar.Message);
             }
         }
-        [HttpPatch]
-        public ActionResult<PetType> Patch(int id, PetTypeDto petTypeDto){
+        [HttpPut]
+        public ActionResult<PetType> Put(int id, PetTypeDto petTypeDto){
             try
             {
             PetType pt = PetTypeConverter.PetTypeDtoToPetType(id,petTypeDto);
-            _petTypeService.UpdatePetType(pt);
+            _petTypeService.Update(pt);
             return pt;
             }
             catch (System.ArgumentException ar)
@@ -62,7 +62,7 @@ namespace DPcode.WebApi.Controllers
         public ActionResult<bool> Delete(int id){
             try
             {
-            return StatusCode(100,_petTypeService.RemovePetType(id));
+            return StatusCode(100,_petTypeService.Remove(id));
             }
             catch (System.ArgumentException ar)
             {

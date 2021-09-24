@@ -10,8 +10,8 @@ namespace DPcode.Domain.Services
     public class DataService : IDataService
     {
         private IFakeDB _fakeDB;
-        private IPetTypeRepository _petTypeRepository;
-        public DataService(IFakeDB fakeDB, IPetTypeRepository petTypeRepository)
+        private IRepository<PetType> _petTypeRepository;
+        public DataService(IFakeDB fakeDB, IRepository<PetType> petTypeRepository)
         {
             this._fakeDB = fakeDB;
             this._petTypeRepository = petTypeRepository;
@@ -22,7 +22,7 @@ namespace DPcode.Domain.Services
                     Pet p = new Pet();
                     p.name = "petname" + i;
                     if (i == 1)
-                        p.type = _petTypeRepository.GetAsPetType("type");
+                        p.type = _petTypeRepository.Make("type");
                     p.price = (1333 + i);
                     AddPet(p);
                 }
@@ -30,10 +30,6 @@ namespace DPcode.Domain.Services
         }
         public Pet AddPet(Pet pet)
         {
-            if (_fakeDB.GetAllPets().Count() > 0)
-                pet.id = (Utils.GetMaxId(_fakeDB.GetAllPets().ToList()));
-            else
-                pet.id = 1;
             return _fakeDB.AddPet(pet);
         }
 
@@ -50,10 +46,7 @@ namespace DPcode.Domain.Services
 #nullable enable
         public Pet? UpdatePet(Pet updatedPet)
         {
-            IEnumerable<Pet> pets = _fakeDB.GetAllPets();
-            Pet? pet = pets.First(p => p.id == updatedPet.id);
             return _fakeDB.UpdatePet(updatedPet);
-
         }
 
 #nullable enable
@@ -74,7 +67,7 @@ namespace DPcode.Domain.Services
 
         public bool PetTypeExists(string type)
         {
-            return _petTypeRepository.PetTypeExists(type);
+            return _petTypeRepository.Exists(type);
         }
 
 #nullable enable
@@ -82,7 +75,7 @@ namespace DPcode.Domain.Services
         {
             if (PetTypeExists(petType))
             {
-                return _fakeDB.GetPetsOfType(_petTypeRepository.GetAsPetType(petType));
+                return _fakeDB.GetPetsOfType(_petTypeRepository.Make(petType));
             }
             else
                 return null;

@@ -14,6 +14,11 @@ namespace DPcode.Infrastructure.Data.Repositories
 
         public Pet AddPet(Pet pet)
         {
+            
+            if (GetAllPets().Count() > 0)
+                pet.id = (Utils.GetMaxId(GetAllPets().ToList()));
+            else
+                pet.id = 1;
             pets.Add(pet);
             return pet;
         }
