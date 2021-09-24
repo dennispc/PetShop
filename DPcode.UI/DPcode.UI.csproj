@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../DPcode.CoreUI/DPcode.CoreUI.csproj" />
+    <ProjectReference Include="../DPcode.UI.Core/DPcode.UI.Core.csproj" />
     <ProjectReference Include="../DPcode.Core/DPcode.Core.csproj" />
     <ProjectReference Include="../DPcode.Domain/DPcode.Domain.csproj" />
-    <ProjectReference Include="../DPcode.Infrastructure.Data/DPcode.Infrastructure.Data.csproj" />
+    <ProjectReference Include="../DPcode.Infrastructure.Static.Data/DPcode.Infrastructure.Static.Data.csproj" />
   </ItemGroup>
   
   <ItemGroup>

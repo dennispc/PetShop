@@ -1,5 +1,5 @@
 using DPcode.Core.Models;
-using DPcode.Infrastructure.Data.IRepositories;
+using DPcode.Infrastructure.Static.Data.IRepositories;
 using DPcode.Domain.IServices;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,9 @@ namespace DPcode.Domain.Services
         {
             _petTypeRepository = petTypeRepository;
         }
-        public PetType Make(string type)
+        public PetType Make(PetType pt)
         {
-            return _petTypeRepository.Make(type);
+            return _petTypeRepository.Make(pt);
         }
 
         public PetType Get(int id)

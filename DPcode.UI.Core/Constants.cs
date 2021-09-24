@@ -1,4 +1,4 @@
-namespace DPcode.CoreUI{
+namespace DPcode.UI.Core{
     public class Constants
     {
         public const string addPetCommand = "Add pet";

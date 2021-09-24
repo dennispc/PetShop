@@ -1,7 +1,7 @@
 
 using DPcode.Core.Models;
-using DPcode.CoreUI.IModels;
-using DPcode.CoreUI.Models;
+using DPcode.UI.Core.IModels;
+using DPcode.UI.Core.Models;
 
 namespace DPcode.UI
 {
@@ -21,18 +21,18 @@ namespace DPcode.UI
 
         #region Main menu   
 
-        public const string addPetCommand = DPcode.CoreUI.Constants.addPetCommand;
+        public const string addPetCommand = DPcode.UI.Core.Constants.addPetCommand;
 
-        public const string updatePetCommand = DPcode.CoreUI.Constants.updatePetCommand;
+        public const string updatePetCommand = DPcode.UI.Core.Constants.updatePetCommand;
 
-        public const string listPetsCommand = DPcode.CoreUI.Constants.listPetsCommand;
+        public const string listPetsCommand = DPcode.UI.Core.Constants.listPetsCommand;
 
-        public const string deletePetCommand = DPcode.CoreUI.Constants.deletePetCommand;
+        public const string deletePetCommand = DPcode.UI.Core.Constants.deletePetCommand;
 
-        public const string printPetsByPriceAscending = DPcode.CoreUI.Constants.printPetsByPriceAscending;
-        public const string searchPetsByType = DPcode.CoreUI.Constants.searchPetsByType;
+        public const string printPetsByPriceAscending = DPcode.UI.Core.Constants.printPetsByPriceAscending;
+        public const string searchPetsByType = DPcode.UI.Core.Constants.searchPetsByType;
 
-        public const string printFiveCheapestPets = DPcode.CoreUI.Constants.printFiveCheapestPets;
+        public const string printFiveCheapestPets = DPcode.UI.Core.Constants.printFiveCheapestPets;
         
         public const string endSessionString = "Exit.";
 

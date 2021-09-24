@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Domain.IServices;
 using DPcode.UI;
@@ -11,14 +12,14 @@ namespace DPcode.Infrastructure.UI.Services
     {
         private IConsoleAskerService _consoleAskerService;
 
-        private IDataService _dataService;
+        private IService<Pet> _petService;
 
         private IService<PetType> _petTypeService;
 
-        public ConsoleResponseHandlerService(IConsoleAskerService consoleAskerService, IDataService dataService, IService<PetType> petTypeService)
+        public ConsoleResponseHandlerService(IConsoleAskerService consoleAskerService, IService<Pet> petService, IService<PetType> petTypeService)
         {
             this._consoleAskerService = consoleAskerService;
-            this._dataService = dataService;
+            this._petService = petService;
             this._petTypeService = petTypeService;
         }
 
@@ -42,12 +43,12 @@ namespace DPcode.Infrastructure.UI.Services
         #region simpleQueries
         public void CreatePet()
         {
-            _dataService.AddPet(_consoleAskerService.CreateNewPet());
+            _petService.Make(_consoleAskerService.CreateNewPet());
         }
 
         public void ListPets()
         {
-            foreach (Pet pet in _dataService.GetAllPets())
+            foreach (Pet pet in _petService.Get().ToList())
             {
                 Console.WriteLine(pet.ToString());
             }
@@ -72,8 +73,10 @@ namespace DPcode.Infrastructure.UI.Services
         }
 
         public void PrintFiveCheapestPets(){
-            foreach(Pet pet in _dataService.GetFiveCheapestPets())
-                Console.WriteLine(pet.ToString());
+
+            List<Pet> pets = _petService.Get().OrderBy(pet=>pet.price).ToList();
+            for(int i = 0 ; i < 5 ; i++)
+                Console.WriteLine(pets[i].ToString());
         }
 
         #endregion

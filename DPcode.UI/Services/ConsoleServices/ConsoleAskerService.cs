@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Domain.IServices;
 using DPcode.Infrastructure.UI.IService;
@@ -12,13 +13,13 @@ namespace DPcode.Infrastructure.UI.Services
     {
 
         private IService<PetType> _petTypeService;
-        private IDataService _dataService;
+        private IService<Pet> _petService;
         private IService<Owner> _OwnerService;
 
-        public ConsoleAskerService(IService<PetType> petTypeService, IDataService dataService, IService<Owner> ownerService)
+        public ConsoleAskerService(IService<PetType> petTypeService, IService<Pet> petService, IService<Owner> ownerService)
         {
             this._petTypeService = petTypeService;
-            this._dataService = dataService;
+            this._petService = petService;
             this._OwnerService = ownerService;
         }
 
@@ -104,20 +105,20 @@ namespace DPcode.Infrastructure.UI.Services
             pet.name = GetStringFromTerminal("Name: ");
             pet.birthDate = GetDateTimeFromTerminal("BirthDate(type 0 if unknown): ");
             pet.price = GetDoubleFromTerminal("Price: ");
-            pet.type = _petTypeService.Make(GetStringFromTerminal("Type: "));
+            pet.type = _petTypeService.Make(new PetType(GetStringFromTerminal("Type: ")));
 
             return pet;
         }
 
         public void DeletePet()
         {
-            List<Pet> pets = _dataService.GetAllPetsAsList();
+            List<Pet> pets = _petService.Get().ToList();
             int? id = GetPetIdFromTerminal("Id of pet to delete");
             if (id != null)
             {
                 Pet p = pets.Find(p => p.id == id);
                 if (p != null && GetConfirmation($"Confirm deleting pet ({p.ToString()})"))
-                    _dataService.DeletePet(p);
+                    _petService.Remove((int)p.id);
                 else
                 {
                     Console.WriteLine(Constants.petNotFound);
@@ -129,7 +130,7 @@ namespace DPcode.Infrastructure.UI.Services
         public void GetPetsOfType()
         {
             string str = GetStringFromTerminal("PetType: ");
-            List<Pet> petsOfType = _dataService.GetPetsOfType(str);
+            List<Pet> petsOfType = _petService.Get().Where(p=>p.type.type==str).ToList();
             if (petsOfType != null)
             {
                 foreach (Pet p in petsOfType)
@@ -139,7 +140,7 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void UpdatePet()
         {
-            List<Pet> pets = _dataService.GetAllPetsAsList();
+            List<Pet> pets = _petService.Get().ToList();
             int? id = GetPetIdFromTerminal("Id of pet to update");
             if (id != null)
             {
@@ -169,12 +170,12 @@ namespace DPcode.Infrastructure.UI.Services
                                 }
                             case "type":
                                 {
-                                    p2.type = _petTypeService.Make(GetStringFromTerminal($"new type(old: {p2.GetPetTypeAsString() }): "));
+                                    p2.type = _petTypeService.Make(new PetType(GetStringFromTerminal($"new type(old: {p2.GetPetTypeAsString() }): ")));
                                     break;
                                 }
                             case "owner":
                                 {
-                                    p2.owner = _OwnerService.Make(GetStringFromTerminal($"new owner(old: {p2.GetPetTypeAsString() }):"));
+                                    p2.owner = _OwnerService.Make(new Owner(GetStringFromTerminal($"new owner(old: {p2.GetPetTypeAsString() }):")));
                                     break;
                                 }
                             case "birthDate":
@@ -191,7 +192,7 @@ namespace DPcode.Infrastructure.UI.Services
                     }
                     if (GetConfirmation($"Confirm Changes: {p.ToString()} => {p2.ToString()}"))
                     {
-                        _dataService.UpdatePet(p2);
+                        _petService.Update(p2);
                         Console.WriteLine(Constants.successfullAction);
                     }
                     else
@@ -204,7 +205,7 @@ namespace DPcode.Infrastructure.UI.Services
 
         public void PrintPetsByPriceAscending()
         {
-            List<Pet> pets = _dataService.GetAllPetsAsList();
+            List<Pet> pets = _petService.Get().ToList();
             pets.Sort(Comparer<Pet>.Create((x, y) => x.price > y.price ? 1 : x.price < y.price ? -1 : 0));
             foreach (Pet p in pets)
                 Console.WriteLine(p.ToString());

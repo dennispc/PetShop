@@ -1,6 +1,6 @@
 using System;
 using DPcode.Core.Models;
-using DPcode.CoreUI.Models;
+using DPcode.UI.Core.Models;
 
 namespace DPcode.UI.IService{
     

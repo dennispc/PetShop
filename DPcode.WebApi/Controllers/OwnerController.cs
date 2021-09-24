@@ -26,7 +26,7 @@ namespace DPcode.WebApi.Controllers
         [HttpPost]
         public ActionResult<Owner> Post(OwnerDto ownerDto)
         {
-            return StatusCode(201, _ownerService.Make(ownerDto.name));
+            return StatusCode(201, _ownerService.Make(new Owner(ownerDto.name)));
         }
 
         [HttpGet]

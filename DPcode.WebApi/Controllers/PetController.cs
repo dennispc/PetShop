@@ -30,11 +30,11 @@ namespace DPcode.WebApi.Controllers
     [ApiController]
     public class PetController : ControllerBase
     {
-        private readonly IDataService _dataService;
+        private readonly IService<Pet> _petService;
         private readonly IPetConverter _petConverter;
-        public PetController(IDataService dataService, IPetConverter petConverter)
+        public PetController(IService<Pet> petService, IPetConverter petConverter)
         {
-            _dataService = dataService;
+            _petService = petService;
             _petConverter = petConverter;
         }
 
@@ -42,14 +42,14 @@ namespace DPcode.WebApi.Controllers
         public ActionResult<Pet> Post(PetModifyDto petModifyDto)
         {
             Pet p = _petConverter.PetModifyDtoToPet(petModifyDto);
-            _dataService.AddPet(p);
+            _petService.Make(p);
             return Created($"https://localhost:5001/pet/{p.id}", p);
         }
 
         [HttpGet]
         public IEnumerable<PetReadDto> Get()
         {
-            IEnumerable<PetReadDto> allPetsAsDto = _petConverter.GetAsPetReadDto(_dataService.GetAllPetsAsList());
+            IEnumerable<PetReadDto> allPetsAsDto = _petConverter.GetAsPetReadDto(_petService.Get().ToList());
             return allPetsAsDto;
         }
 
@@ -57,7 +57,7 @@ namespace DPcode.WebApi.Controllers
         public ActionResult<Pet> Get(int id)
         {
 #nullable enable
-            Pet? p = _dataService.GetPet(id);
+            Pet? p = _petService.Get(id);
             if (p != null)
                 return StatusCode(201, p);
             else
@@ -72,7 +72,7 @@ namespace DPcode.WebApi.Controllers
             Pet? p = null;
             try
             {
-                p = _dataService.GetPet(id);
+                p = _petService.Get(id);
             }
             catch (ArgumentException ar)
             {
@@ -91,18 +91,15 @@ namespace DPcode.WebApi.Controllers
         [HttpDelete]
         public ActionResult<Pet> Delete(int id)
         {
-#nullable enable
-            Pet? pet;
             try
             {
-                pet = _dataService.GetPet(id);
+                _petService.Remove(id);
+                return Ok();
             }
             catch (ArgumentException ar)
             {
                 return BadRequest(ar.Message);
             }
-#nullable disable
-            return StatusCode(202, _dataService.DeletePet(pet));
         }
     }
 }

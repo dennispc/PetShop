@@ -4,7 +4,7 @@ namespace DPcode.Domain.IServices
 {
     public interface IService<T>
     {
-        T Make(string type);
+        T Make(T t);
 
         IEnumerable<T> Get();
 

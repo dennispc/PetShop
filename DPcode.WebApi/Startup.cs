@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using DPcode.Domain.IServices;
-using DPcode.Infrastructure.Data.IRepositories;
+using DPcode.Infrastructure.Static.Data.IRepositories;
 using DPcode.Domain.Services;
-using DPcode.Infrastructure.Data.Repositories;
+using DPcode.Infrastructure.Static.Data.Repositories;
 using DPcode.WebApi.IConverters;
 using DPcode.WebApi.Converters;
 using DPcode.Core.Models;
@@ -31,12 +31,12 @@ namespace DPcode.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DPcode.WebApi", Version = "v1" });
             });
-            services.AddScoped<IFakeDB, FakeDB>();
+            services.AddScoped<IRepository<Pet>,PetRepository>();
+            services.AddScoped<IService<Pet>,PetService>();
             services.AddScoped<IRepository<PetType>, PetTypeRepository>();
             services.AddScoped<IService<PetType>, PetTypeService>();
             services.AddScoped<IRepository<Owner>,OwnerRepository>();
             services.AddScoped<IService<Owner>, OwnerService>();
-            services.AddScoped<IDataService, DataService>();
             services.AddScoped<IPetConverter,PetConverter>();
         }
 

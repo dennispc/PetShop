@@ -1,14 +1,14 @@
 ﻿using DPcode.Core.Models;
-using DPcode.CoreUI.IModels;
-using DPcode.CoreUI.Models;
+using DPcode.UI.Core.IModels;
+using DPcode.UI.Core.Models;
 using DPcode.Domain.IServices;
 using DPcode.Domain.Services;
-using DPcode.Infrastructure.Data.IRepositories;
-using DPcode.Infrastructure.Data.Repositories;
 using DPcode.Infrastructure.UI.IService;
 using DPcode.Infrastructure.UI.Services;
 using DPcode.UI.IService;
 using Microsoft.Extensions.DependencyInjection;
+using DPcode.Infrastructure.Static.Data.IRepositories;
+using DPcode.Infrastructure.Static.Data.Repositories;
 
 namespace DPcode.UI
 {
@@ -38,10 +38,10 @@ namespace DPcode.UI
         {
             ServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IMenu, Menu>();
-            serviceCollection.AddScoped<IFakeDB, FakeDB>();
+            serviceCollection.AddScoped<IRepository<Pet>,PetRepository>();
+            serviceCollection.AddScoped<IService<Pet>,PetService>();
             serviceCollection.AddScoped<IRepository<PetType>, PetTypeRepository>();
             serviceCollection.AddScoped<IService<PetType>, PetTypeService>();
-            serviceCollection.AddScoped<IDataService, DataService>();
             serviceCollection.AddScoped<IConsoleAskerService, ConsoleAskerService>();
             serviceCollection.AddScoped<IConsoleTreeHandlerService, ConsoleTreeHandlerService>();
             serviceCollection.AddScoped<IConsoleResponseHandlerService, ConsoleResponseHandlerService>();
@@ -55,6 +55,11 @@ namespace DPcode.UI
             consoleResponseHandlerService = serviceProvider.GetRequiredService<IConsoleResponseHandlerService>();
             Init();
         }
+
+
+
+
+
 
         public static void Init()
         {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Domain.IServices;
-using DPcode.Infrastructure.Data.IRepositories;
+using DPcode.Infrastructure.Static.Data.IRepositories;
 
 namespace DPcode.Domain.Services
 {
@@ -14,8 +14,8 @@ namespace DPcode.Domain.Services
             _ownerRepository=ownerRepository;
         }
         
-        public Owner Make(string name){
-           return  _ownerRepository.Make(name);
+        public Owner Make(Owner o){
+           return  _ownerRepository.Make(o);
         }
 
         public Owner Get(int id)

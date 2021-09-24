@@ -23,7 +23,7 @@ namespace DPcode.WebApi.Controllers
 
         [HttpPost]
         public ActionResult<PetType> Post(PetTypeDto petTypeDto){
-            return StatusCode(201, _petTypeService.Make(petTypeDto.type));
+            return StatusCode(201, _petTypeService.Make(new PetType(petTypeDto.type)));
         }
 
         [HttpGet]
