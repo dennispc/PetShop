@@ -17,6 +17,5 @@ namespace DPcode.Core.Models
             }
             return ++max;
         }
-        
     }
 }

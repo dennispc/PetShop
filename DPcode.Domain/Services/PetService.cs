@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DPcode.Core.Models;
+using DPcode.Domain.IRepositories;
 using DPcode.Domain.IServices;
-using DPcode.Infrastructure.Static.Data.IRepositories;
-
 namespace DPcode.Domain.Services
 {
     public class PetService : IService<Pet>

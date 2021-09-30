@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DPcode.Core.Models;
 using System;
-using DPcode.Infrastructure.Static.Data.IRepositories;
+using DPcode.Domain.IRepositories;
 
 namespace DPcode.Infrastructure.Static.Data.Repositories
 {

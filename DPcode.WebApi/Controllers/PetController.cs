@@ -10,6 +10,7 @@ using DPcode.Core.Models;
 using DPcode.WebApi.Dtos;
 using DPcode.WebApi.Converters;
 using DPcode.WebApi.IConverters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DPcode.WebApi.Controllers
 
@@ -28,6 +29,7 @@ namespace DPcode.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+  //  [Authorize]
     public class PetController : ControllerBase
     {
         private readonly IService<Pet> _petService;
@@ -47,6 +49,7 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<PetReadDto> Get()
         {
             IEnumerable<PetReadDto> allPetsAsDto = _petConverter.GetAsPetReadDto(_petService.Get().ToList());
@@ -54,6 +57,7 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public ActionResult<Pet> Get(int id)
         {
 #nullable enable

@@ -1,5 +1,5 @@
 using DPcode.Core.Models;
-using DPcode.Infrastructure.Static.Data.IRepositories;
+using DPcode.Domain.IRepositories;
 using DPcode.Domain.IServices;
 using System.Collections.Generic;
 using System.Linq;

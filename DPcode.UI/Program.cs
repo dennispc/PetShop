@@ -7,8 +7,8 @@ using DPcode.Infrastructure.UI.IService;
 using DPcode.Infrastructure.UI.Services;
 using DPcode.UI.IService;
 using Microsoft.Extensions.DependencyInjection;
-using DPcode.Infrastructure.Static.Data.IRepositories;
 using DPcode.Infrastructure.Static.Data.Repositories;
+using DPcode.Domain.IRepositories;
 
 namespace DPcode.UI
 {
@@ -55,10 +55,6 @@ namespace DPcode.UI
             consoleResponseHandlerService = serviceProvider.GetRequiredService<IConsoleResponseHandlerService>();
             Init();
         }
-
-
-
-
 
 
         public static void Init()

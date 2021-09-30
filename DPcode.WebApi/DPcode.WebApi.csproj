@@ -5,13 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../DPcode.Core/DPcode.Core.csproj" />
     <ProjectReference Include="../DPcode.Domain/DPcode.Domain.csproj" />
-    <ProjectReference Include="../DPcode.Infrastructure.Static.Data/DPcode.Infrastructure.Static.Data.csproj" />
+    <ProjectReference Include="../DPcode.Infrastructure.Data/DPcode.Infrastructure.Data.csproj" />
   </ItemGroup>
 
 </Project>

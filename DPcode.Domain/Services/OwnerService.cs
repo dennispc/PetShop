@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using DPcode.Core.Models;
+using DPcode.Domain.IRepositories;
 using DPcode.Domain.IServices;
-using DPcode.Infrastructure.Static.Data.IRepositories;
 
 namespace DPcode.Domain.Services
 {

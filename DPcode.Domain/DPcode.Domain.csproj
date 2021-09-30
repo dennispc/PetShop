@@ -6,7 +6,6 @@
 
 <ItemGroup>
   <ProjectReference Include="../DPcode.Core/DPcode.Core.csproj" />
-  <ProjectReference Include="../DPcode.Infrastructure.Static.Data/DPcode.Infrastructure.Static.Data.csproj" />
 </ItemGroup>
 
 </Project>
