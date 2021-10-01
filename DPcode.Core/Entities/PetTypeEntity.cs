@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DPcode.Infrastructure.Data.Entities
 {
-    public class OwnerEntity
+    public class PetTypeEntity
     {
-        public int id{get;set;}
-        public string name{get;set;}
-     
+        public int? id{get;set;}        
+        public string type{get;set;}
+
     }
 }

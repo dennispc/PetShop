@@ -43,11 +43,11 @@ namespace DPcode.WebApi.Converters
             try{
             Pet p = new Pet();
             p.name = pmd.name;
-            p.type = new PetType(pmd.petType);
+            p.type = new PetType{type=pmd.petType};
             p.birthDate = pmd.birthDate;
             p.soldDate = pmd.soldDate;
             p.price = pmd.price;
-            p.owner = new Owner (pmd.owner);
+            p.owner = new Owner {name = pmd.owner};
             return p;
             }catch(System.ArgumentException){
                 throw;

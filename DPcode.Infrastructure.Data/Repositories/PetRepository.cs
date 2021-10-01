@@ -1,31 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using DPcode.Core.Models;
 using DPcode.Domain.IRepositories;
 using DPcode.Infrastructure.Data.Entities;
-using DPcode.Infrastructure.Data.IConverters;
 
 namespace DPcode.Infrastructure.Data.Repositories
 {
-    public class PetRepository : IRepository<Pet>
+    public class PetRepository : IRepository<PetEntity>
     {
         private PetShopContext _ctx;
-        private IConverter<Pet, PetEntity> _pc;
-        private IConverter<PetType, PetTypeEntity> _ptc;
-        private IConverter<Owner, OwnerEntity> _oc;
-        private IRepository<Owner> _or;
-        private IRepository<PetType> _pr;
+        private IRepository<OwnerEntity> _or;
+        private IRepository<PetTypeEntity> _ptr;
 
-        public PetRepository(PetShopContext ctx, IConverter<Pet, PetEntity> pc, IConverter<Owner, OwnerEntity> oc, IConverter<PetType, PetTypeEntity> ptc, IRepository<Owner> or, IRepository<PetType> pr)
+        public PetRepository(PetShopContext ctx, IRepository<OwnerEntity> or, IRepository<PetTypeEntity> ptr)
         {
             _ctx = ctx;
-            _pc = pc;
-            _ptc = ptc;
-            _oc = oc;
-            _or=or;
-            _pr=pr;
+            _or = or;
+            _ptr = ptr;
         }
 
         public bool Exists(string name)
@@ -33,27 +24,61 @@ namespace DPcode.Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Pet> Get()
+        public IEnumerable<PetEntity> Get()
         {
-            List<PetEntity> petEntities = _ctx.pets.ToList(); 
-            foreach (var i in petEntities){
-                i.type=_ctx.petTypes.First(t=>t.id==i.type.id);
-                i.owner=_ctx.owners.First(o=>o.id==i.owner.id);
-            }
-            return petEntities.Select(p=>_pc.Convert(p));
-
+            return _ctx.pets.Join(
+                _ctx.owners,
+                petEntity => petEntity.ownerId,
+                ownerEntity => ownerEntity.id,
+                (petEntity, ownerEntity) => new PetEntity
+                {
+                    id = petEntity.id,
+                    ownerId = ownerEntity.id ?? 0,
+                    owner = ownerEntity,
+                    name = petEntity.name,
+                    price = petEntity.price,
+                    soldDate = petEntity.soldDate,
+                    birthDate = petEntity.birthDate
+                }
+            ).Join(
+                _ctx.petTypes,
+                petEntity => petEntity.ownerId,
+                petTypeEntity => petTypeEntity.id,
+                (petEntity, petTypeEntity) => new PetEntity
+                {
+                    id = petEntity.id,
+                    type = petTypeEntity,
+                    ownerId = petEntity.ownerId,
+                    owner = petEntity.owner,
+                    name = petEntity.name,
+                    price = petEntity.price,
+                    soldDate = petEntity.soldDate,
+                    birthDate = petEntity.birthDate
+                }
+            );
         }
 
-        public Pet Get(int id)
+        public PetEntity Get(int id)
         {
-            Pet p = _pc.Convert(_ctx.pets.First(p => p.id == id));
-            p.owner = _oc.Convert(_ctx.owners.First(o => o.name == p.owner.name));
-            p.type = _ptc.Convert(_ctx.petTypes.First(pt => pt.type == p.type.type));
+            PetEntity p;
+            try
+            {
+                p = _ctx.pets.First(p => p.id == id);
+            }
+            catch (System.Exception)
+            {
+
+                throw new System.ArgumentException($"No Pet with id {id}");
+            }
             return p;
         }
 
-        public Pet Make(Pet t)
+        public PetEntity Make(PetEntity t)
         {
+            t.petTypeId = _ptr.Make(t.type).id ?? 0;
+            t.ownerId = _or.Make(t.owner).id ?? 0;
+            t.owner = null;
+            t.type = null;
             int maxID;
             try
             {
@@ -64,31 +89,30 @@ namespace DPcode.Infrastructure.Data.Repositories
                 maxID = 0;
             }
             t.id = maxID + 1;
-            _ctx.pets.Add(_pc.Convert(t));
-            _or.Make(new Owner(t.owner.name));
-            _pr.Make(new PetType(t.type.type));
-            _ctx.SaveChanges();
+            _ctx.pets.Add(t);
             return t;
         }
 
-        public bool Remove(Pet t)
+        public bool Remove(PetEntity t)
         {
             _ctx.pets.Remove(_ctx.pets.First(p => p.id == t.id));
-            _ctx.SaveChanges();
-
             return true;
         }
 
-        public bool Update(Pet t)
+        public void SaveChanges()
+        {
+            _ctx.SaveChanges();
+        }
+
+        public bool Update(PetEntity t)
         {
             PetEntity pet = _ctx.pets.First(p => p.id == t.id);
             pet.name = t.name;
-            pet.type = _ptc.Convert(t.type);
+            pet.type = t.type;
             pet.birthDate = t.birthDate;
             pet.soldDate = t.soldDate;
             pet.price = t.price;
-            pet.owner = _oc.Convert(t.owner);
-            _ctx.SaveChanges();
+            pet.owner = t.owner;
             return true;
         }
     }

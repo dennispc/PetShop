@@ -1,74 +1,75 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DPcode.Core.Models;
 using DPcode.Domain.IRepositories;
 using DPcode.Infrastructure.Data.Entities;
-using DPcode.Infrastructure.Data.Converters;
-using DPcode.Infrastructure.Data.IConverters;
+using DPcode.Domain.IConverters;
 
 namespace DPcode.Infrastructure.Data.Repositories
 {
-    public class OwnerRepository : IRepository<Owner>
+    public class OwnerRepository : IRepository<OwnerEntity>
     {
         private PetShopContext _ctx;
-        private IConverter<Owner,OwnerEntity> _oc;
-        public OwnerRepository(PetShopContext ctx, IConverter<Owner,OwnerEntity> oc)
+        public OwnerRepository(PetShopContext ctx)
         {
             _ctx = ctx;
-            _oc=oc;
         }
         public bool Exists(string name)
         {
             return _ctx.owners.First(o => o.name == name) != null;
         }
 
-        public IEnumerable<Owner> Get()
+        public IEnumerable<OwnerEntity> Get()
         {
-            return _ctx.owners.Select(o=>_oc.Convert(o)).ToList();
+            return _ctx.owners.ToList();
         }
 
-        public Owner Get(int id)
+        public OwnerEntity Get(int id)
         {
-            return _oc.Convert(_ctx.owners.Single(o => id == o.id));
+            return _ctx.owners.Single(o => id == o.id);
         }
 
-        public Owner Make(Owner t)
+        public OwnerEntity Make(OwnerEntity t)
         {
             try
             {
-                return _oc.Convert(_ctx.owners.First(o => o.name == t.name));
+                OwnerEntity owner=_ctx.owners.First(o => o.name == t.name);
+                t.id=owner.id;
+                return _ctx.owners.First(o => o.name == t.name);
             }
             catch (System.InvalidOperationException)
             {
                 int maxID;
                 try
                 {
-                    maxID = _ctx.owners.Max(o => o.id);
+                    maxID = _ctx.owners.Max(o => o.id??0);
                 }
                 catch (System.InvalidOperationException)
                 {
                     maxID = 0;
                 }
                 t.id = maxID + 1;
-                _ctx.owners.Add(_oc.Convert(t));
-                _ctx.SaveChanges();
+                _ctx.owners.Add(t);
                 return t;
             }
+            SaveChanges();
         }
 
-        public bool Remove(Owner t)
+        public bool Remove(OwnerEntity t)
         {
             _ctx.owners.Remove(_ctx.owners.First(o => o.id == t.id));
-            _ctx.SaveChanges();
             return true;
         }
 
-        public bool Update(Owner t)
+        public void SaveChanges()
+        {
+            _ctx.SaveChanges();
+        }
+
+        public bool Update(OwnerEntity t)
         {
             _ctx.owners.First(o => o.id == t.id).name=t.name;
-            _ctx.SaveChanges();
             return true;
         }
     }

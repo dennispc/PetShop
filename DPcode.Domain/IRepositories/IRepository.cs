@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using DPcode.Core.Models;
 
 namespace DPcode.Domain.IRepositories
 {
@@ -17,5 +19,6 @@ namespace DPcode.Domain.IRepositories
 
         T Get(int id);
 
+        void SaveChanges();
     }
 }

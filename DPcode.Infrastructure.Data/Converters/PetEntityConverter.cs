@@ -1,56 +1,39 @@
-using DPcode.Infrastructure.Data.IConverters;
 using DPcode.Core.Models;
 using DPcode.Infrastructure.Data.Entities;
 using DPcode.Domain.IRepositories;
 using System.Linq;
+using DPcode.Domain.IConverters;
 
 namespace DPcode.Infrastructure.Data.Converters
 {
     public class PetEntityConverter : IConverter<Pet, PetEntity>
     {
         private IConverter<PetType, PetTypeEntity> _ptc;
+        private IRepository<PetTypeEntity> _ptr;
         private IConverter<Owner, OwnerEntity> _oc;
-        private PetShopContext _ctx;
-        private IRepository<PetType> _ptr;
-        private IRepository<Owner> _or;
-        public PetEntityConverter(IConverter<PetType, PetTypeEntity> ptc, IConverter<Owner, OwnerEntity> oc, PetShopContext ctx, IRepository<Owner> or, IRepository<PetType> ptr)
+        private IRepository<OwnerEntity> _or;
+
+        public PetEntityConverter(IConverter<PetType, PetTypeEntity> ptc, IConverter<Owner, OwnerEntity> oc, IRepository<PetTypeEntity> ptr, IRepository<OwnerEntity> or)
         {
             _oc = oc;
             _ptc = ptc;
-            _ctx = ctx;
+            _ptr=ptr;
             _or = or;
-            _ptr = ptr;
         }
 
         public PetEntity Convert(Pet t)
         {
-            OwnerEntity ownerGet;
-            PetTypeEntity typeGet;
-            try
-            {
-                ownerGet = _ctx.owners.First(o => o.name == t.owner.name);
-            }
-            catch (System.Exception)
-            {
-                ownerGet = new OwnerEntity { name = t.owner.name };
-            }
-            try
-            {
-                typeGet = _ctx.petTypes.First(o => o.type == t.type.type);
-            }
-            catch (System.Exception)
-            {
-                typeGet = new PetTypeEntity { type = t.type.type };
-            }
             return new PetEntity
             {
                 id = t.id ?? 0,
                 name = t.name,
-                type = typeGet,
+                type = _ptc.Convert(t.type),
+                petTypeId = t.type.id??0,
                 birthDate = t.birthDate,
                 soldDate = t.soldDate,
                 price = t.price,
-                owner = ownerGet
+                ownerId = t.owner.id??0,
+                owner = _oc.Convert(t.owner)
             };
         }
 
@@ -60,11 +43,11 @@ namespace DPcode.Infrastructure.Data.Converters
             {
                 id = t.id,
                 name = t.name,
-                type = new PetType { id = t.type.id, type=t.type.type},
+                type = _ptc.Convert(t.type),
                 birthDate = t.birthDate,
                 soldDate = t.soldDate,
                 price = t.price,
-                owner = new Owner { id = t.owner.id, name=t.owner.name}
+                owner = _oc.Convert(t.owner)
             };
         }
 

@@ -1,76 +1,74 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DPcode.Core.Models;
 using DPcode.Domain.IRepositories;
 using DPcode.Infrastructure.Data.Entities;
-using DPcode.Infrastructure.Data.Converters;
-using DPcode.Infrastructure.Data.IConverters;
 
 namespace DPcode.Infrastructure.Data.Repositories
 {
-    public class PetTypeRepository : IRepository<PetType>
+    public class PetTypeRepository : IRepository<PetTypeEntity>
     {
         private PetShopContext _ctx;
-        private IConverter<PetType,PetTypeEntity> _ptc;
-        public PetTypeRepository(PetShopContext ctx, IConverter<PetType,PetTypeEntity> ptc)
+        public PetTypeRepository(PetShopContext ctx)
         {
             _ctx = ctx;
-            _ptc=ptc;
         }
         public bool Exists(string type)
         {
             return _ctx.petTypes.First(pt => pt.type == type) != null;
         }
 
-        public IEnumerable<PetType> Get()
+        public IEnumerable<PetTypeEntity> Get()
         {
-            var selectQuery = _ctx.petTypes.Select(o=>_ptc.Convert(o)).ToList();
+            var selectQuery = _ctx.petTypes.ToList();
             return selectQuery;
         }
 
-        public PetType Get(int id)
+        public PetTypeEntity Get(int id)
         {
-            return _ptc.Convert(_ctx.petTypes.Single(pt => id == pt.id));
+            return _ctx.petTypes.Single(pt => id == pt.id);
         }
 
-        public PetType Make(PetType t)
+        public PetTypeEntity Make(PetTypeEntity t)
         {
             try
             {
-                return _ptc.Convert(_ctx.petTypes.First(pt => pt.type == t.type));
+                PetTypeEntity pt = _ctx.petTypes.First(pt => pt.type == t.type);
+                return pt;
             }
             catch (System.InvalidOperationException)
             {
-
-                int maxID;
+                int maxID = 0;
                 try
                 {
-                    maxID = _ctx.petTypes.Max(o => o.id);
+                    maxID = _ctx.petTypes.Max(o => o.id??0);
                 }
                 catch (System.InvalidOperationException)
                 {
                     maxID = 0;
                 }
                 t.id = maxID + 1;
-                _ctx.petTypes.Add(_ptc.Convert(t));
-                _ctx.SaveChanges();
+                _ctx.petTypes.Add(t);
                 return t;
             }
+            SaveChanges();
         }
 
-        public bool Remove(PetType t)
+        public bool Remove(PetTypeEntity t)
         {
             _ctx.petTypes.Remove(_ctx.petTypes.First(pt => pt.id == t.id));
-            _ctx.SaveChanges();
             return true;
         }
 
-        public bool Update(PetType t)
+        public void SaveChanges()
+        {
+            _ctx.SaveChanges();
+        }
+
+        public bool Update(PetTypeEntity t)
         {            
             _ctx.petTypes.First(pt => pt.id == t.id).type=t.type;
-            _ctx.SaveChanges();
             return true;
         }
     }

@@ -23,5 +23,8 @@ namespace DPcode.Infrastructure.Data.Entities
 
         public OwnerEntity? owner{get;set;}
 
+        public int ownerId{get;set;}
+        public int petTypeId{get;set;}
+
     }
 }

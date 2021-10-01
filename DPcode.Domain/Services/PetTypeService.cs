@@ -1,6 +1,8 @@
 using DPcode.Core.Models;
+using DPcode.Domain.IConverters;
 using DPcode.Domain.IRepositories;
 using DPcode.Domain.IServices;
+using DPcode.Infrastructure.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,21 +10,26 @@ namespace DPcode.Domain.Services
 {
     public class PetTypeService : IService<PetType>
     {
-        private IRepository<PetType> _petTypeRepository;
-        public PetTypeService(IRepository<PetType> petTypeRepository)
+        private IRepository<PetTypeEntity> _petTypeRepository;
+        private IConverter<PetType, PetTypeEntity> _ptc;
+
+        public PetTypeService(IRepository<PetTypeEntity> petTypeRepository, IConverter<PetType,PetTypeEntity> ptc)
         {
             _petTypeRepository = petTypeRepository;
+            _ptc=ptc;
         }
         public PetType Make(PetType pt)
         {
-            return _petTypeRepository.Make(pt);
+            _petTypeRepository.Make(_ptc.Convert(pt));
+            _petTypeRepository.SaveChanges();
+            return pt;
         }
 
         public PetType Get(int id)
         {
             try
             {
-                return _petTypeRepository.Get(id);
+                return _ptc.Convert(_petTypeRepository.Get(id));
             }
             catch (System.InvalidOperationException)
             {
@@ -32,14 +39,17 @@ namespace DPcode.Domain.Services
 
         public IEnumerable<PetType> Get()
         {
-            return _petTypeRepository.Get();
+            return _petTypeRepository.Get().Select(pt=>_ptc.Convert(pt));
         }
 
         public bool Remove(int id)
         {
             try
             {
-                return _petTypeRepository.Remove(Get(id));
+                bool res = _petTypeRepository.Remove(_petTypeRepository.Get(id));
+                _petTypeRepository.SaveChanges();
+                return res;
+
             }
             catch (System.ArgumentException)
             {
@@ -52,8 +62,9 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                _petTypeRepository.Update(petType);
-                return true;
+                bool res =_petTypeRepository.Update(_petTypeRepository.Get(petType.id??0));
+                _petTypeRepository.SaveChanges();
+                return res;
             }
             catch (System.ArgumentException)
             {

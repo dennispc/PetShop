@@ -14,9 +14,9 @@ using DPcode.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using DPcode.Infrastructure.Data;
 using Microsoft.Extensions.Logging;
-using DPcode.Infrastructure.Data.IConverters;
 using DPcode.Infrastructure.Data.Converters;
 using DPcode.Infrastructure.Data.Entities;
+using DPcode.Domain.IConverters;
 
 namespace DPcode.WebApi
 {
@@ -50,14 +50,14 @@ namespace DPcode.WebApi
                 });
                 
             
-            services.AddScoped<IConverter<Owner, OwnerEntity>,OwnerEntityConverter>();
             services.AddScoped<IConverter<PetType, PetTypeEntity>,PetTypeEntityConverter>();
-            services.AddScoped<IConverter<Pet, PetEntity>,PetEntityConverter>();    
-            services.AddScoped<IRepository<PetType>, PetTypeRepository>();
+            services.AddScoped<IRepository<PetTypeEntity>, PetTypeRepository>();
             services.AddScoped<IService<PetType>, PetTypeService>();
-            services.AddScoped<IRepository<Owner>,OwnerRepository>();
+            services.AddScoped<IConverter<Owner, OwnerEntity>,OwnerEntityConverter>();
+            services.AddScoped<IRepository<OwnerEntity>,OwnerRepository>();
             services.AddScoped<IService<Owner>, OwnerService>();
-            services.AddScoped<IRepository<Pet>,PetRepository>();
+            services.AddScoped<IConverter<Pet, PetEntity>,PetEntityConverter>();    
+            services.AddScoped<IRepository<PetEntity>,PetRepository>();
             services.AddScoped<IService<Pet>,PetService>();
             services.AddScoped<IPetConverter,PetConverter>();
 
