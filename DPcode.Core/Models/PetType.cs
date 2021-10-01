@@ -7,6 +7,8 @@ namespace DPcode.Core.Models
         }
         public string type{get;set;}
 
-        public PetType(){}
+        public PetType() : base(){
+            
+        }
     }
 }

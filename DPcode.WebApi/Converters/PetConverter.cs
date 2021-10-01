@@ -30,11 +30,11 @@ namespace DPcode.WebApi.Converters
         public Pet PutPetValueToPet(Pet p, PetModifyDto pmd)
         {
             p.name = pmd.name;
-            p.type = _petTypeService.Make(new PetType(pmd.petType));
+            p.type = new PetType(pmd.petType);
             p.birthDate = pmd.birthDate;
             p.soldDate = pmd.soldDate;
             p.price = pmd.price;
-            p.owner = _ownerService.Make(new Owner(pmd.owner));
+            p.owner = new Owner(pmd.owner);
             return p;
         }
 
@@ -43,11 +43,11 @@ namespace DPcode.WebApi.Converters
             try{
             Pet p = new Pet();
             p.name = pmd.name;
-            p.type = _petTypeService.Make(new PetType(pmd.petType));
+            p.type = new PetType(pmd.petType);
             p.birthDate = pmd.birthDate;
             p.soldDate = pmd.soldDate;
             p.price = pmd.price;
-            p.owner = _ownerService.Make(new Owner (pmd.owner));
+            p.owner = new Owner (pmd.owner);
             return p;
             }catch(System.ArgumentException){
                 throw;

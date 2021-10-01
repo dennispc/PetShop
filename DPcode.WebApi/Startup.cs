@@ -14,6 +14,9 @@ using DPcode.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using DPcode.Infrastructure.Data;
 using Microsoft.Extensions.Logging;
+using DPcode.Infrastructure.Data.IConverters;
+using DPcode.Infrastructure.Data.Converters;
+using DPcode.Infrastructure.Data.Entities;
 
 namespace DPcode.WebApi
 {
@@ -45,13 +48,22 @@ namespace DPcode.WebApi
                         .UseLoggerFactory(loggerFactory)
                         .UseSqlite("Data Source=../videoApp.db");
                 });
-            services.AddScoped<IRepository<Pet>,PetRepository>();
-            services.AddScoped<IService<Pet>,PetService>();
+                
+            
+            services.AddScoped<IConverter<Owner, OwnerEntity>,OwnerEntityConverter>();
+            services.AddScoped<IConverter<PetType, PetTypeEntity>,PetTypeEntityConverter>();
+            services.AddScoped<IConverter<Pet, PetEntity>,PetEntityConverter>();    
             services.AddScoped<IRepository<PetType>, PetTypeRepository>();
             services.AddScoped<IService<PetType>, PetTypeService>();
             services.AddScoped<IRepository<Owner>,OwnerRepository>();
             services.AddScoped<IService<Owner>, OwnerService>();
+            services.AddScoped<IRepository<Pet>,PetRepository>();
+            services.AddScoped<IService<Pet>,PetService>();
             services.AddScoped<IPetConverter,PetConverter>();
+
+            
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +77,7 @@ namespace DPcode.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DPcode.WebApi v1"));
 
+                ctx.Database.EnsureDeleted();
                 ctx.Database.EnsureCreated();
             }
 

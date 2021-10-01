@@ -22,7 +22,7 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                return _petTypeRepository.Get().First(pt => pt.id == id);
+                return _petTypeRepository.Get(id);
             }
             catch (System.InvalidOperationException)
             {
@@ -39,7 +39,7 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                return _petTypeRepository.Remove(GetValidPetTypeFromId(id));
+                return _petTypeRepository.Remove(Get(id));
             }
             catch (System.ArgumentException)
             {
@@ -48,23 +48,11 @@ namespace DPcode.Domain.Services
         }
 
 
-        public PetType GetValidPetTypeFromId(int id)
-        {
-            try
-            {
-                return _petTypeRepository.Get().First(pt => pt.id == id);
-            }
-            catch (System.InvalidOperationException)
-            {
-                throw new System.ArgumentException(Constants.IvalidPetType(id));
-            }
-        }
-
         public bool Update(PetType petType)
         {
             try
             {
-                GetValidPetTypeFromId(petType.id ?? throw new System.NullReferenceException("owner id cant be null")).type = petType.type;
+                _petTypeRepository.Update(petType);
                 return true;
             }
             catch (System.ArgumentException)

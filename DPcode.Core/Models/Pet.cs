@@ -5,6 +5,9 @@ namespace DPcode.Core.Models
 {
     public class Pet : Identifyable
     {
+        public Pet() :base(){
+            
+        }
 
         public string name { get; set; }
 

@@ -9,7 +9,9 @@ namespace DPcode.Core.Models
             this.name = name;
         }
 
-        public Owner(){}
+        public Owner() : base(){
+
+        }
 
     }
 }

@@ -21,7 +21,7 @@ namespace DPcode.Domain.Services
         public Owner Get(int id)
         {
             try{
-                return _ownerRepository.Get().First(o=>o.id==id);
+                return _ownerRepository.Get(id);
             }
             catch(System.InvalidOperationException){
                 throw new System.ArgumentException(Constants.IvalidOwnerType(id));
@@ -37,7 +37,7 @@ namespace DPcode.Domain.Services
         {
             try
             {
-                 return _ownerRepository.Remove(GetValidOwnerFromId(id));
+                 return _ownerRepository.Remove(Get(id));
             }
             catch (System.ArgumentException)
             {
@@ -46,24 +46,11 @@ namespace DPcode.Domain.Services
         }
 
         
-        public Owner GetValidOwnerFromId(int id)
-        {
-            try
-            {
-                return _ownerRepository.Get().First(o => o.id == id);
-            }
-            catch
-            {
-                throw new System.ArgumentException(Constants.IvalidOwnerType(id));
-            }
-        }
-
-        
         public bool Update(Owner owner)
         {
             try
             {
-                GetValidOwnerFromId(owner.id??throw new System.NullReferenceException("owner id cant be null")).name=owner.name;
+                _ownerRepository.Update(owner);
                 return true;
             }
             catch (System.ArgumentException)

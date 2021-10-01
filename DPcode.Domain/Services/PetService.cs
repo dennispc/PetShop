@@ -31,19 +31,7 @@ namespace DPcode.Domain.Services
 
         public bool Remove(int id)
         {
-            return _petRepository.Remove(GetValidPetTypeFromId(id));
-        }
-
-         public Pet GetValidPetTypeFromId(int id)
-        {
-            try
-            {
-                return _petRepository.Get().First(p => p.id == id);
-            }
-            catch (System.InvalidOperationException)
-            {
-                throw new System.ArgumentException(Constants.IvalidPetType(id));
-            }
+            return _petRepository.Remove(Get(id));
         }
 
         public bool Update(Pet t)
