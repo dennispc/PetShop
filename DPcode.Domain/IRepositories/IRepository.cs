@@ -18,7 +18,5 @@ namespace DPcode.Domain.IRepositories
         bool Update(T t);
 
         T Get(int id);
-
-        void SaveChanges();
     }
 }

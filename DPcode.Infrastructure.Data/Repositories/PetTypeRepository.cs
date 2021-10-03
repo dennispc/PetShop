@@ -42,7 +42,7 @@ namespace DPcode.Infrastructure.Data.Repositories
                 int maxID = 0;
                 try
                 {
-                    maxID = _ctx.petTypes.Max(o => o.id??0);
+                    maxID = _ctx.petTypes.Max(o => o.id ?? 0);
                 }
                 catch (System.InvalidOperationException)
                 {
@@ -50,25 +50,25 @@ namespace DPcode.Infrastructure.Data.Repositories
                 }
                 t.id = maxID + 1;
                 _ctx.petTypes.Add(t);
+                _ctx.SaveChanges();
+
                 return t;
             }
-            SaveChanges();
         }
 
         public bool Remove(PetTypeEntity t)
         {
             _ctx.petTypes.Remove(_ctx.petTypes.First(pt => pt.id == t.id));
+            _ctx.SaveChanges();
+
             return true;
         }
 
-        public void SaveChanges()
-        {
-            _ctx.SaveChanges();
-        }
-
         public bool Update(PetTypeEntity t)
-        {            
-            _ctx.petTypes.First(pt => pt.id == t.id).type=t.type;
+        {
+            _ctx.petTypes.First(pt => pt.id == t.id).type = t.type;
+            _ctx.SaveChanges();
+
             return true;
         }
     }

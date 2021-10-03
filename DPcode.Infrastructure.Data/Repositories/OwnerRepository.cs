@@ -51,24 +51,21 @@ namespace DPcode.Infrastructure.Data.Repositories
                 }
                 t.id = maxID + 1;
                 _ctx.owners.Add(t);
+                _ctx.SaveChanges();
                 return t;
             }
-            SaveChanges();
         }
 
         public bool Remove(OwnerEntity t)
         {
             _ctx.owners.Remove(_ctx.owners.First(o => o.id == t.id));
-            return true;
-        }
-
-        public void SaveChanges()
-        {
             _ctx.SaveChanges();
+            return true;
         }
 
         public bool Update(OwnerEntity t)
         {
+            _ctx.SaveChanges();
             _ctx.owners.First(o => o.id == t.id).name=t.name;
             return true;
         }

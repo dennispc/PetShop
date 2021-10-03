@@ -22,7 +22,6 @@ namespace DPcode.Domain.Services
         public Owner Make(Owner o)
         {
             _ownerRepository.Make(_oc.Convert(o));
-            _ownerRepository.SaveChanges();
             return o;
         }
 
@@ -48,7 +47,6 @@ namespace DPcode.Domain.Services
             try
             {
                 bool res = _ownerRepository.Remove(_ownerRepository.Get(id));
-                _ownerRepository.SaveChanges();
                 return res;
             }
             catch (System.ArgumentException)
@@ -63,7 +61,6 @@ namespace DPcode.Domain.Services
             try
             {
                 bool res = _ownerRepository.Update(_oc.Convert(owner));
-                _ownerRepository.SaveChanges();
                 return res;
             }
             catch (System.ArgumentException)

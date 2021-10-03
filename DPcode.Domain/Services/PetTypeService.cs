@@ -21,7 +21,6 @@ namespace DPcode.Domain.Services
         public PetType Make(PetType pt)
         {
             _petTypeRepository.Make(_ptc.Convert(pt));
-            _petTypeRepository.SaveChanges();
             return pt;
         }
 
@@ -47,7 +46,6 @@ namespace DPcode.Domain.Services
             try
             {
                 bool res = _petTypeRepository.Remove(_petTypeRepository.Get(id));
-                _petTypeRepository.SaveChanges();
                 return res;
 
             }
@@ -63,7 +61,6 @@ namespace DPcode.Domain.Services
             try
             {
                 bool res =_petTypeRepository.Update(_petTypeRepository.Get(petType.id??0));
-                _petTypeRepository.SaveChanges();
                 return res;
             }
             catch (System.ArgumentException)

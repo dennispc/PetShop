@@ -46,21 +46,18 @@ namespace DPcode.Domain.Services
         public Pet Make(Pet p)
         {
             _petRepository.Make(_pc.Convert(p));
-            _petRepository.SaveChanges();
             return p;
         }
 
         public bool Remove(int id)
         {
             bool res = _petRepository.Remove(_petRepository.Get(id));
-            _petRepository.SaveChanges();
             return res;
         }
 
         public bool Update(Pet t)
         {
             bool res = _petRepository.Update(_pc.Convert(t));
-            _petRepository.SaveChanges();
             return res;
         }
     }

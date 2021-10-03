@@ -90,20 +90,18 @@ namespace DPcode.Infrastructure.Data.Repositories
             }
             t.id = maxID + 1;
             _ctx.pets.Add(t);
+            _ctx.SaveChanges();
+
             return t;
         }
 
         public bool Remove(PetEntity t)
         {
             _ctx.pets.Remove(_ctx.pets.First(p => p.id == t.id));
+            _ctx.SaveChanges();
+
             return true;
         }
-
-        public void SaveChanges()
-        {
-            _ctx.SaveChanges();
-        }
-
         public bool Update(PetEntity t)
         {
             PetEntity pet = _ctx.pets.First(p => p.id == t.id);
@@ -113,6 +111,8 @@ namespace DPcode.Infrastructure.Data.Repositories
             pet.soldDate = t.soldDate;
             pet.price = t.price;
             pet.owner = t.owner;
+            _ctx.SaveChanges();
+
             return true;
         }
     }
