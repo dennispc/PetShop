@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DPcode.Domain.IServices
+namespace DPcode.Core.IServices
 {
     public interface IService<T>
     {

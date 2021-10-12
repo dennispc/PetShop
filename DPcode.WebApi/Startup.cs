@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using DPcode.Domain.IServices;
+using DPcode.Core.IServices;
 using DPcode.Domain.Services;
 using DPcode.WebApi.IConverters;
 using DPcode.WebApi.Converters;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DPcode.Domain.IServices;
+using DPcode.Core.IServices;
 using DPcode.Core.Models;
 using DPcode.WebApi.Dtos;
 using DPcode.WebApi.Converters;

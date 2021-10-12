@@ -3,7 +3,7 @@ using System.Linq;
 using DPcode.Core.Models;
 using DPcode.Domain.IConverters;
 using DPcode.Domain.IRepositories;
-using DPcode.Domain.IServices;
+using DPcode.Core.IServices;
 using DPcode.Infrastructure.Data.Entities;
 
 namespace DPcode.Domain.Services
