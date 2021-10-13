@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using DPcode.Domain.IServices;
+using DPcode.Core.IServices;
 using DPcode.Domain.Services;
 using DPcode.WebApi.IConverters;
 using DPcode.WebApi.Converters;
@@ -46,7 +46,7 @@ namespace DPcode.WebApi
                 {
                     options
                         .UseLoggerFactory(loggerFactory)
-                        .UseSqlite("Data Source=../videoApp.db");
+                        .UseSqlite("Data Source=../DPcode.Infrastructure.Data/videoApp.db");
                 });
                 
             
@@ -77,7 +77,6 @@ namespace DPcode.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DPcode.WebApi v1"));
 
-                ctx.Database.EnsureDeleted();
                 ctx.Database.EnsureCreated();
             }
 

@@ -15,6 +15,8 @@ namespace DPcode.UI
     class Program
     {
 
+        //This code is no longer maintained
+
         /*
         done    Show list of choices (Pure UI, Add one choice at a time) 
         done    Show list of all Pets
