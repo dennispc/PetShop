@@ -16,17 +16,6 @@ namespace DPcode.WebApi.Converters
             _petTypeService=petTypeService;
         }
 
-        public List<PetReadDto> GetAsPetReadDto(List<Pet> pets)
-        {
-            List<PetReadDto> allPetsAsDto = new List<PetReadDto>();
-
-            foreach (Pet p in pets)
-            {
-                allPetsAsDto.Add(new PetReadDto(p));
-            }
-            return allPetsAsDto;
-        }
-
         public Pet PutPetValueToPet(Pet p, PetModifyDto pmd)
         {
             p.name = pmd.name;

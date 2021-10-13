@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using DPcode.Infrastructure.Data.Converters;
 using DPcode.Infrastructure.Data.Entities;
 using DPcode.Domain.IConverters;
+using System.Threading.Tasks;
 
 namespace DPcode.WebApi
 {
@@ -33,9 +34,10 @@ namespace DPcode.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var loggerFactory = LoggerFactory.Create(builder => {
-                    builder.AddConsole();
-                }
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            }
             );
             services.AddSwaggerGen(c =>
             {
@@ -48,28 +50,28 @@ namespace DPcode.WebApi
                         .UseLoggerFactory(loggerFactory)
                         .UseSqlite("Data Source=../DPcode.Infrastructure.Data/videoApp.db");
                 });
-                
-            
-            services.AddScoped<IConverter<PetType, PetTypeEntity>,PetTypeEntityConverter>();
+
+
+            services.AddScoped<IConverter<PetType, PetTypeEntity>, PetTypeEntityConverter>();
             services.AddScoped<IRepository<PetTypeEntity>, PetTypeRepository>();
             services.AddScoped<IService<PetType>, PetTypeService>();
-            services.AddScoped<IConverter<Owner, OwnerEntity>,OwnerEntityConverter>();
-            services.AddScoped<IRepository<OwnerEntity>,OwnerRepository>();
+            services.AddScoped<IConverter<Owner, OwnerEntity>, OwnerEntityConverter>();
+            services.AddScoped<IRepository<OwnerEntity>, OwnerRepository>();
             services.AddScoped<IService<Owner>, OwnerService>();
-            services.AddScoped<IConverter<Pet, PetEntity>,PetEntityConverter>();    
-            services.AddScoped<IRepository<PetEntity>,PetRepository>();
-            services.AddScoped<IService<Pet>,PetService>();
-            services.AddScoped<IPetConverter,PetConverter>();
+            services.AddScoped<IConverter<Pet, PetEntity>, PetEntityConverter>();
+            services.AddScoped<IRepository<PetEntity>, PetRepository>();
+            services.AddScoped<IService<Pet>, PetService>();
+            services.AddScoped<IPetConverter, PetConverter>();
 
-            
 
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PetShopContext ctx)
         {
-            
+
 
             if (env.IsDevelopment())
             {
@@ -79,6 +81,7 @@ namespace DPcode.WebApi
 
                 ctx.Database.EnsureCreated();
             }
+
 
             app.UseHttpsRedirection();
 
@@ -90,6 +93,9 @@ namespace DPcode.WebApi
             {
                 endpoints.MapControllers();
             });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
         }
     }
 }

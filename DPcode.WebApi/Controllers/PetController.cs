@@ -52,18 +52,17 @@ namespace DPcode.WebApi.Controllers
         [AllowAnonymous]
         public IEnumerable<PetReadDto> Get()
         {
-            IEnumerable<PetReadDto> allPetsAsDto = _petConverter.GetAsPetReadDto(_petService.Get().ToList());
-            return allPetsAsDto;
+            return _petService.Get().Select(p=>new PetReadDto(p)).ToList();
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<Pet> Get(int id)
+        public ActionResult<PetReadDto> Get(int id)
         {
 #nullable enable
             Pet? p = _petService.Get(id);
             if (p != null)
-                return StatusCode(201, p);
+                return StatusCode(201, new PetReadDto(p));
             else
                 return StatusCode(404);
         }

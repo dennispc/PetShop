@@ -64,6 +64,8 @@ namespace DPcode.Infrastructure.Data.Repositories
             try
             {
                 p = _ctx.pets.First(p => p.id == id);
+                p.owner=_ctx.owners.FirstOrDefault(o=>o.id==p.ownerId);
+                p.type=_ctx.petTypes.FirstOrDefault(pt=> pt.id==p.petTypeId);
             }
             catch (System.Exception)
             {
