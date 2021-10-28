@@ -9,6 +9,7 @@ using DPcode.WebApi.Converters;
 using DPcode.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DPcode.Core.Entities;
 
 namespace DPcode.WebApi.Controllers
 {
@@ -30,9 +31,9 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Owner> Get()
+        public IEnumerable<Owner> Get([FromQuery] Filter filter)
         {
-            return _ownerService.Get();
+            return _ownerService.Get(filter);
         }
 
         [HttpGet("{id}")]

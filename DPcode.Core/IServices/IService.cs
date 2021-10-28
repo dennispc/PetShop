@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DPcode.Core.Entities;
 
 namespace DPcode.Core.IServices
 {
@@ -6,7 +7,7 @@ namespace DPcode.Core.IServices
     {
         T Make(T t);
 
-        IEnumerable<T> Get();
+        IEnumerable<T> Get(Filter filter);
 
         T Get(int id);
 

@@ -9,6 +9,7 @@ using DPcode.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DPcode.WebApi.Converters;
+using DPcode.Core.Entities;
 
 namespace DPcode.WebApi.Controllers
 {
@@ -27,8 +28,8 @@ namespace DPcode.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PetType> Get(){
-            return _petTypeService.Get();
+        public IEnumerable<PetType> Get([FromQuery] Filter filter){
+            return _petTypeService.Get(filter);
         }
 
         [HttpGet("{id}")]

@@ -11,6 +11,7 @@ using DPcode.WebApi.Dtos;
 using DPcode.WebApi.Converters;
 using DPcode.WebApi.IConverters;
 using Microsoft.AspNetCore.Authorization;
+using DPcode.Core.Entities;
 
 namespace DPcode.WebApi.Controllers
 
@@ -50,9 +51,9 @@ namespace DPcode.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<PetReadDto> Get()
+        public IEnumerable<PetReadDto> Get([FromQuery] Filter filter)
         {
-            return _petService.Get().Select(p=>new PetReadDto(p)).ToList();
+            return _petService.Get(filter).Select(p=>new PetReadDto(p)).ToList();
         }
 
         [HttpGet("{id}")]

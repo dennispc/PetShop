@@ -7,6 +7,7 @@ using DPcode.Domain.IConverters;
 using DPcode.Domain.IRepositories;
 using DPcode.Core.IServices;
 using DPcode.Infrastructure.Data.Entities;
+using DPcode.Core.Entities;
 
 namespace DPcode.Domain.Services
 {
@@ -25,8 +26,12 @@ namespace DPcode.Domain.Services
             _ptr = ptr;
         }
 
-        public IEnumerable<Pet> Get()
+        public IEnumerable<Pet> Get(Filter filter)
         {
+            if(filter.ItemsPerPage>0&&filter.Currentpage>0){
+                return _petRepository.Get().Skip((filter.Currentpage-1)*filter.ItemsPerPage).Take(filter.ItemsPerPage).Select(p => _pc.Convert(p));
+            }
+
             return _petRepository.Get().Select(p => _pc.Convert(p));
         }
 
